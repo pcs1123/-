@@ -3,164 +3,706 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b1020" />
-  <meta name="description" content="一支通往祕密頁面的復古翻蓋手機。" />
-  <title>秘密通訊｜翻蓋手機入口</title>
+  <meta name="theme-color" content="#f7c9e8" />
+  <meta name="description" content="角色持有的 Y2K 翻蓋手機網站。" />
+  <title>角色手機｜Y2K 翻蓋手機</title>
   <style>
-    :root { --ink: #111a34; --blue: #a0e9ed; --cream: #f1f4fd; }
+    :root {
+      --bg1: #fff8fd;
+      --bg2: #f4eefb;
+      --line: #4a3854;
+      --silver1: #f9f6fb;
+      --silver2: #f0e8f3;
+      --silver3: #d6ceda;
+      --pink1: #ff92c7;
+      --pink2: #f46aaf;
+      --pink3: #ffd9ee;
+      --lav: #d9b5ff;
+      --blue: #a8ecff;
+      --mint: #cbffe3;
+      --lcd1: #ddffd4;
+      --lcd2: #c7f4bd;
+      --lcdInk: #213120;
+      --shadow: rgba(84, 41, 90, 0.18);
+    }
     *, *::before, *::after { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; }
     body {
-      margin: 0; min-height: 100vh; color: #e6e9fc;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-      background: radial-gradient(circle at 50% 18%, #28365b 0, #151d36 32%, #0a0f1e 72%, #070a14 100%);
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, -apple-system, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: #513d58;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.95), transparent 25%),
+        radial-gradient(circle at 85% 12%, rgba(255,212,240,.75), transparent 18%),
+        radial-gradient(circle at 20% 78%, rgba(207,243,255,.6), transparent 17%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
       overflow-x: hidden;
     }
     body::before {
-      content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .42;
-      background-image: radial-gradient(circle, #fff 0 1px, transparent 1.5px);
-      background-size: 83px 97px; background-position: 13px 27px;
-      mask-image: linear-gradient(to bottom, #000, transparent 95%);
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .48;
+      background-image:
+        linear-gradient(transparent 95%, rgba(255,255,255,.28) 100%),
+        radial-gradient(circle at 15px 15px, rgba(255,255,255,.8) 2px, transparent 3px),
+        radial-gradient(circle at 75px 40px, rgba(255,184,221,.32) 3px, transparent 4px),
+        radial-gradient(circle at 35px 85px, rgba(174,229,255,.28) 3px, transparent 4px);
+      background-size: 100% 100%, 120px 120px, 160px 160px, 190px 190px;
     }
-    main { min-height: 100vh; padding: 35px 16px 45px; display: flex; align-items: center; flex-direction: column; position: relative; }
-    .eyebrow { font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: .35em; color: #adc1eb; margin: 0 0 11px; }
-    h1 { margin: 0; font-size: clamp(20px, 4vw, 27px); font-weight: 700; letter-spacing: .13em; text-align: center; }
-    .subtitle { margin: 10px 0 25px; color: #aeb9d3; font-size: 12px; letter-spacing: .12em; text-align: center; }
-    .phone { width: min(100%, 360px); filter: drop-shadow(0 26px 23px rgba(1,4,16,.5)); }
-    .top {
-      position: relative; padding: 15px 17px 19px; border-radius: 32px 32px 20px 20px;
-      border: 2px solid #e6eaf5;
-      background: linear-gradient(115deg, #bac2da 1%, #f2f5ff 15%, #b0bfda 42%, #f8faff 67%, #8999b8 100%);
-      box-shadow: inset 0 0 0 2px rgba(76,86,123,.3), inset 3px 0 12px rgba(255,255,255,.56), 0 0 0 1px rgba(46,58,92,.4);
+    main {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px 14px 32px;
+      position: relative;
+      isolation: isolate;
     }
-    .speaker { height: 5px; width: 62px; margin: 2px auto 15px; border-radius: 9px; background: #596780; box-shadow: inset 0 1px 2px #25304b, 0 1px 0 #fff; }
-    .screen-bezel { padding: 11px; background: linear-gradient(135deg, #1e2b40, #090f1e 68%, #485873); border: 2px solid #606e86; border-radius: 15px; box-shadow: inset 0 3px 13px rgba(0,0,0,.72), 0 2px 2px rgba(255,255,255,.55); }
+    .wrap { width: min(100%, 420px); }
+    .page-tag {
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: .22em;
+      color: #b27aa2;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .headline {
+      text-align: center;
+      margin: 0 0 18px;
+      line-height: 1.35;
+    }
+    .headline strong {
+      display: block;
+      font-size: clamp(24px, 5vw, 30px);
+      letter-spacing: .08em;
+      color: #6d4d71;
+      text-shadow: 0 1px 0 #fff;
+    }
+    .headline span {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+      letter-spacing: .14em;
+      color: #a67f99;
+    }
+    .phone {
+      width: 100%;
+      filter: drop-shadow(0 24px 28px rgba(137, 93, 137, .18));
+      position: relative;
+    }
+    .top-shell, .bottom-shell {
+      border: 2px solid #fdf7ff;
+      background:
+        linear-gradient(140deg, #ffffff, #f4ecf6 18%, #dad0db 34%, #fdfcff 51%, #ddd2e0 69%, #f8f4fa 84%, #cec3d1 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.9),
+        inset 5px 5px 12px rgba(255,255,255,.65),
+        inset -5px -6px 15px rgba(173,148,176,.2),
+        0 4px 12px rgba(111, 78, 117, .12);
+    }
+    .top-shell {
+      position: relative;
+      border-radius: 38px 38px 22px 22px;
+      padding: 14px 18px 18px;
+    }
+    .cam-bar {
+      width: 65px;
+      height: 6px;
+      border-radius: 999px;
+      margin: 0 auto 10px;
+      background: #b57aa2;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .decor {
+      position: absolute;
+      z-index: 2;
+      user-select: none;
+      line-height: 1;
+    }
+    .flower { top: 10px; left: 18px; font-size: 26px; transform: rotate(-8deg); }
+    .badge {
+      top: 12px; right: 18px;
+      background: linear-gradient(180deg, #ffb7d8, #ff83bd);
+      border: 2px solid #fff0f8;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #6c2f51;
+      transform: rotate(11deg);
+      box-shadow: 0 2px 6px rgba(198, 74, 136, .22);
+    }
+    .rainbow { bottom: 12px; left: 20px; font-size: 30px; transform: rotate(-8deg); }
+    .icons {
+      bottom: 18px; right: 16px; display: flex; gap: 6px; font-size: 20px;
+    }
+    .screen-frame {
+      position: relative;
+      border-radius: 20px;
+      padding: 12px;
+      border: 2px solid #514152;
+      background: linear-gradient(145deg, #ff79bc, #f452a4 52%, #ce3d8f 100%);
+      box-shadow: inset 0 2px 4px rgba(255,255,255,.45), 0 2px 0 rgba(255,255,255,.7);
+    }
+    .brand {
+      position: absolute;
+      top: 10px; left: 50%; transform: translateX(-50%);
+      font-weight: 900; font-size: 12px; letter-spacing: .18em; color: #261124;
+      text-shadow: 0 1px 0 rgba(255,255,255,.28);
+      z-index: 2;
+    }
     .lcd {
-      position: relative; isolation: isolate; height: 226px; overflow: hidden; padding: 12px 14px;
-      border-radius: 6px; color: #c2fbf8; background: linear-gradient(160deg, #123e4a, #092835 58%, #09232f 100%);
-      box-shadow: inset 0 0 24px rgba(2,13,27,.8);
-      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      position: relative;
+      overflow: hidden;
+      border-radius: 7px;
+      border: 2px solid #2f3135;
+      background: linear-gradient(180deg, var(--lcd1), var(--lcd2));
+      color: var(--lcdInk);
+      min-height: 258px;
+      padding: 14px 14px 12px;
+      box-shadow: inset 0 0 18px rgba(60,96,44,.2), inset 0 0 0 1px rgba(255,255,255,.6);
+      font-family: "Courier New", ui-monospace, monospace;
     }
-    .lcd::after { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .24; pointer-events: none; background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(0,0,0,.3) 3px 4px); }
-    .lcd::before { content: ""; position: absolute; width: 160px; height: 260px; top: -100px; left: -68px; transform: rotate(29deg); background: linear-gradient(to right, transparent, rgba(255,255,255,.08), transparent); }
-    .screen-top { display: flex; justify-content: space-between; font-size: 10px; letter-spacing: .06em; opacity: .85; }
-    .signal { display: inline-flex; align-items: center; gap: 6px; }
-    .signal i { display:inline-block; width: 6px; height: 6px; border-radius: 50%; background: #96ffdb; box-shadow: 0 0 7px #96ffdb; }
-    .screen-body { text-align: center; margin-top: 28px; }
-    .screen-icon { font-size: 19px; line-height: 1; letter-spacing: .1em; }
-    .screen-label { margin: 11px 0 5px; font-size: 11px; letter-spacing: .22em; color: #8ed2d8; }
-    .display { width:100%; min-height: 37px; padding: 4px 2px; color: #e7fffa; font-size: clamp(18px, 6vw, 25px); font-weight: bold; letter-spacing: .13em; text-shadow: 0 0 13px rgba(146,251,250,.55); white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
-    .display::-webkit-scrollbar { display:none; }
-    .display.empty { color: #5e929a; }
-    .hint { padding: 0 3px; margin: 9px 0 0; height: 27px; font-size: 11px; color: #91bfc7; line-height: 1.4; }
-    .screen-footer { position: absolute; bottom: 10px; left: 14px; right: 14px; display:flex; justify-content:space-between; font-size: 10px; color: #89c4c5; }
-    .screen-footer span:last-child { color: #bdfac8; }
-    .hinge { height: 25px; width: 94%; margin: -2px auto; position: relative; z-index: 2; border: 1px solid #a6b2c9; border-radius: 11px; background: linear-gradient(to bottom, #7d8eab, #e2e8f8 39%, #7586a4 69%, #d0d9e9 100%); box-shadow: inset 0 1px 2px #fff, 0 2px 3px #303955; }
-    .hinge::before, .hinge::after { content:""; position: absolute; width: 31px; top: 2px; bottom: 2px; background: repeating-linear-gradient(to right, #667a9a 0 2px,#b7c2db 2px 5px); border-radius: 3px; }
-    .hinge::before { left: 9px; } .hinge::after { right:9px; }
-    .bottom { position: relative; padding: 18px 26px 23px; border: 2px solid #e7eafa; border-radius: 20px 20px 39px 39px; background: linear-gradient(113deg,#a2aecb 0%,#e9edfa 15%,#c3cde3 52%,#eef1fc 79%,#94a3c0 100%); box-shadow: inset 0 0 0 2px rgba(73,84,116,.28), inset 2px 2px 10px rgba(255,255,255,.8), 0 0 0 1px rgba(31,41,66,.42); }
-    .small-logo { margin: 0 0 13px; color: #687998; font-size: 9px; text-align: center; font-weight: 800; letter-spacing: .44em; }
-    .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin-bottom: 12px; }
-    button { font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-    .mini { min-width: 0; min-height: 38px; border: 1px solid #8898b5; border-bottom: 3px solid #71819e; border-radius: 14px; color: #415171; font-size: 11px; font-weight: 800; background: linear-gradient(#f9fbff,#bbc8e1); box-shadow: 0 2px 3px rgba(73,84,125,.14); }
-    .call { border-color: #42795e; border-bottom-color: #2e6149; background: linear-gradient(#b8ffdb,#57be91); color: #124f3d; font-size: 13px; }
-    .keys { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px 12px; }
-    .key { min-width: 0; min-height: 59px; border-radius: 17px; border: 1px solid #aab5ce; border-bottom: 4px solid #8998b4; background: linear-gradient(154deg,#fff 4%,#e4eaf7 48%,#bfcae1 100%); color: #334262; box-shadow: 0 2px 4px rgba(64,77,105,.16), inset 0 1px 0 #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .num { display: block; font-size: 23px; font-weight: 760; line-height: 1; }
-    .letters { display: block; margin-top: 3px; min-height: 10px; font-size: 9px; font-weight: 800; letter-spacing: .15em; color: #7889a5; }
-    button:active, button.pressed { transform: translateY(2px); filter: brightness(.95); box-shadow: inset 0 2px 6px rgba(20,37,61,.18); }
-    button:focus-visible { outline: 3px solid #59a1c8; outline-offset: 2px; }
-    .phone-foot { margin-top: 19px; font-size: 10px; color: #b0b9d2; letter-spacing: .12em; text-align: center; line-height: 1.8; }
-    .phone-foot strong { color: #e0e7ff; font-weight: 600; }
-    @media (max-width: 390px) { main { padding-top: 25px; } .subtitle { margin-bottom: 19px; } .bottom { padding: 16px 20px 20px; } .keys { gap: 8px 10px; } .key { min-height: 56px; } .lcd { height: 218px; } }
-    @media (prefers-reduced-motion: no-preference) { .phone { animation: rise .6s ease-out both; } @keyframes rise { from { transform: translateY(13px); opacity: .4; } to { transform: translateY(0); opacity: 1; } } }
+    .lcd::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(to bottom, rgba(255,255,255,.07) 0 2px, rgba(0,0,0,.04) 2px 3px);
+      opacity: .35;
+      pointer-events: none;
+    }
+    .lcd::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 240px;
+      top: -90px;
+      left: -40px;
+      transform: rotate(26deg);
+      background: linear-gradient(to right, transparent, rgba(255,255,255,.25), transparent);
+      pointer-events: none;
+    }
+    .status, .softkeys {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    .bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+    .bars i {
+      display: block; width: 3px; background: var(--lcdInk); border-radius: 2px;
+    }
+    .bars i:nth-child(1) { height: 4px; }
+    .bars i:nth-child(2) { height: 6px; }
+    .bars i:nth-child(3) { height: 8px; }
+    .bars i:nth-child(4) { height: 10px; }
+    .view {
+      position: relative;
+      z-index: 1;
+      min-height: 208px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      padding: 8px 2px 0;
+    }
+    .clock-large {
+      font-size: clamp(34px, 10vw, 52px);
+      line-height: 1;
+      letter-spacing: -.06em;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .date-line, .owner-line, .small-note, .code-line {
+      font-size: 11px;
+      letter-spacing: .08em;
+    }
+    .owner-line { margin-top: 10px; font-weight: 700; }
+    .tiny-heart { margin-top: 9px; font-size: 20px; }
+    .unlock-label {
+      margin: 14px 0 6px;
+      font-size: 12px;
+      letter-spacing: .18em;
+      font-weight: 700;
+    }
+    .display {
+      min-height: 28px;
+      font-size: clamp(20px, 5vw, 25px);
+      font-weight: 700;
+      letter-spacing: .14em;
+      white-space: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      text-transform: uppercase;
+    }
+    .display::-webkit-scrollbar { display: none; }
+    .display.empty { opacity: .5; }
+    .small-note { min-height: 30px; line-height: 1.35; margin-top: 7px; }
+    .content-card {
+      text-align: left;
+      border: 1.5px solid rgba(33,49,32,.7);
+      border-radius: 10px;
+      background: rgba(255,255,255,.2);
+      padding: 10px 11px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.24);
+    }
+    .content-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 9px;
+    }
+    .content-head strong {
+      display: block; font-size: 16px; line-height: 1.2;
+    }
+    .content-head span { font-size: 11px; }
+    .content-emoji { font-size: 18px; }
+    .content-body {
+      white-space: pre-line;
+      font-size: 13px;
+      line-height: 1.55;
+      min-height: 98px;
+    }
+    .content-tags {
+      margin-top: 8px;
+      font-size: 11px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .content-tags b {
+      border: 1px solid rgba(33,49,32,.65);
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-weight: 700;
+      background: rgba(255,255,255,.18);
+    }
+    .unlock-ok {
+      font-size: 13px; font-weight: 700; margin-bottom: 10px;
+    }
+    .softkeys {
+      margin-top: 8px;
+    }
+    .softkeys button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--lcdInk);
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 0;
+      cursor: pointer;
+    }
+    .hinge {
+      width: 95%;
+      height: 24px;
+      margin: -1px auto;
+      border-radius: 14px;
+      border: 2px solid #f8f3fa;
+      background: linear-gradient(180deg, #e1d7e5, #cac0cf 50%, #f7f4f9 100%);
+      position: relative;
+      z-index: 2;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 3px 6px rgba(125,95,131,.12);
+    }
+    .hinge::before, .hinge::after {
+      content: "";
+      position: absolute; top: 4px; bottom: 4px; width: 34px; border-radius: 6px;
+      background: repeating-linear-gradient(90deg, rgba(255,255,255,.88) 0 4px, rgba(197,184,200,.9) 4px 8px);
+    }
+    .hinge::before { left: 12px; }
+    .hinge::after { right: 12px; }
+    .bottom-shell {
+      position: relative;
+      border-radius: 24px 24px 46px 46px;
+      padding: 16px 20px 22px;
+    }
+    .brand-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 11px;
+      color: #9d7ea2;
+      letter-spacing: .18em;
+      font-weight: 800;
+    }
+    .nav-pad { width: 146px; margin: 0 auto 10px; }
+    .utility-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .u-btn {
+      min-height: 34px;
+      border-radius: 11px;
+      border: 1px solid #fdf7ff;
+      background: linear-gradient(180deg, #ffe9f6, #e8e0ef);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 2px 5px rgba(143,111,151,.14);
+      color: #7b5575;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .center-pad {
+      display: grid;
+      grid-template-columns: 38px 70px 38px;
+      grid-template-rows: 32px 68px 32px;
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+    .nav, .ok-btn {
+      border-radius: 16px;
+      border: 1px solid #fdf7ff;
+      background: linear-gradient(180deg, #ffb0d5, #f67eb8);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 2px 5px rgba(191,77,136,.18);
+      color: #5f2241;
+      font-weight: 800;
+    }
+    .nav { min-height: 32px; }
+    .ok-btn {
+      grid-column: 2; grid-row: 2;
+      min-height: 68px;
+      border-radius: 999px;
+      font-size: 22px;
+    }
+    .up { grid-column: 2; grid-row: 1; }
+    .left { grid-column: 1; grid-row: 2; }
+    .right { grid-column: 3; grid-row: 2; }
+    .down { grid-column: 2; grid-row: 3; }
+    .control-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin: 11px 0 10px;
+    }
+    .strip-btn {
+      min-height: 36px;
+      border-radius: 13px;
+      border: 1px solid #fdf7ff;
+      color: #704c6b;
+      font-size: 12px;
+      font-weight: 800;
+      background: linear-gradient(180deg, #fff1f8, #ebe2f0);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 4px rgba(141,112,146,.14);
+    }
+    .strip-btn.confirm {
+      background: linear-gradient(180deg, #d9ffe8, #a7efc1);
+      color: #2e5f3a;
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px 10px;
+    }
+    .key {
+      min-height: 53px;
+      border-radius: 17px;
+      border: 1px solid #fff6fb;
+      background: linear-gradient(180deg, #ff85c1, #f669af 53%, #ed5aa5 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 3px 6px rgba(180,71,132,.22);
+      color: #fff7fc;
+      text-shadow: 0 1px 0 rgba(111,37,76,.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: inherit;
+    }
+    .key .num { font-size: 22px; font-weight: 900; line-height: 1; }
+    .key .letters { font-size: 9px; font-weight: 800; letter-spacing: .12em; margin-top: 3px; }
+    button {
+      font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    }
+    button:active, button.pressed {
+      transform: translateY(2px);
+      filter: brightness(.97);
+    }
+    button:focus-visible {
+      outline: 3px solid #9de5ff;
+      outline-offset: 2px;
+    }
+    .charm {
+      position: absolute;
+      right: -8px;
+      bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transform: rotate(6deg);
+      user-select: none;
+      pointer-events: none;
+    }
+    .loop {
+      width: 18px;
+      height: 60px;
+      border: 3px solid #7b607d;
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+      border-radius: 999px;
+      transform: translateX(-10px) rotate(-18deg);
+      opacity: .75;
+    }
+    .beads {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      background: rgba(255,255,255,.55);
+      border: 2px solid rgba(255,255,255,.55);
+      border-radius: 999px;
+      padding: 7px 8px 9px;
+      box-shadow: 0 5px 10px rgba(143,111,151,.15);
+    }
+    .beads span { font-size: 18px; line-height: 1; }
+    .owner-note {
+      text-align: center;
+      margin-top: 16px;
+      color: #a07e97;
+      font-size: 12px;
+      line-height: 1.7;
+      letter-spacing: .05em;
+    }
+    .owner-note strong { color: #76546f; }
+    @media (max-width: 420px) {
+      .top-shell { padding: 13px 14px 16px; }
+      .bottom-shell { padding: 15px 16px 20px; }
+      .lcd { min-height: 248px; }
+      .key { min-height: 50px; }
+      .charm { right: -2px; transform: scale(.95) rotate(6deg); }
+    }
   </style>
 </head>
 <body>
   <main>
-    <p class="eyebrow">✦ PRIVATE FREQUENCY · 2004 ✦</p>
-    <h1>秘密通訊</h1>
-    <p class="subtitle">輸入暗號，接通另一個世界。</p>
+    <div class="wrap">
+      <div class="page-tag">Y2K CHARACTER PHONE</div>
+      <h1 class="headline">
+        <strong id="siteTitle">LUNA'S PHONE</strong>
+        <span id="siteSubtitle">輸入暗號後，直接在手機螢幕裡解鎖內容</span>
+      </h1>
 
-    <div class="phone" aria-label="復古翻蓋手機互動鍵盤">
-      <section class="top" aria-label="手機螢幕">
-        <div class="speaker" aria-hidden="true"></div>
-        <div class="screen-bezel">
-          <div class="lcd">
-            <div class="screen-top"><span class="signal"><i></i> SIGNAL 04</span><span id="clock">00:00</span></div>
-            <div class="screen-body">
-              <div class="screen-icon" aria-hidden="true">✦ ☏ ✦</div>
-              <p class="screen-label">ENTER ACCESS CODE</p>
-              <div class="display empty" id="display" aria-live="polite" aria-label="目前輸入的暗號">_ _ _ _</div>
-              <p class="hint" id="hint" aria-live="polite">請用下方按鍵輸入暗號</p>
+      <div class="phone" aria-label="Y2K 風格翻蓋手機互動網站">
+        <section class="top-shell" aria-label="手機上蓋與螢幕">
+          <div class="decor flower" aria-hidden="true">🌼</div>
+          <div class="decor badge" aria-hidden="true">BFF</div>
+          <div class="decor rainbow" aria-hidden="true">🌈</div>
+          <div class="decor icons" aria-hidden="true"><span>🍓</span><span>☮</span></div>
+          <div class="cam-bar" aria-hidden="true"></div>
+
+          <div class="screen-frame">
+            <div class="brand" id="phoneBrand">LUNA</div>
+            <div class="lcd">
+              <div class="status">
+                <span>TW <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
+                <span id="clockSmall">00:00</span>
+              </div>
+
+              <div class="view" id="screenView" aria-live="polite">
+                <div id="lockView">
+                  <div class="clock-large" id="clockLarge">00:00</div>
+                  <div class="date-line" id="dateLine">2004 / 04 / 20</div>
+                  <div class="tiny-heart" aria-hidden="true">♥</div>
+                  <div class="owner-line" id="ownerLine">OWNER : LUNA</div>
+                  <div class="unlock-label">ENTER CODE</div>
+                  <div class="display empty" id="display">_ _ _ _</div>
+                  <div class="small-note" id="hint">按下方手機鍵盤輸入暗號，再按 OK 解鎖</div>
+                </div>
+              </div>
+
+              <div class="softkeys">
+                <button type="button" id="screenBack">BACK</button>
+                <span id="modeLabel">MODE : 123</span>
+                <button type="button" id="screenHome">HOME</button>
+              </div>
             </div>
-            <div class="screen-footer"><span id="mode">MODE: 123</span><span>● CONNECT READY</span></div>
+          </div>
+        </section>
+
+        <div class="hinge" aria-hidden="true"></div>
+
+        <section class="bottom-shell" aria-label="手機按鍵">
+          <div class="brand-row">✦ STARLINE / Y2K EDITION ✦</div>
+
+          <div class="nav-pad" aria-hidden="true">
+            <div class="utility-row">
+              <button class="u-btn" type="button">☁</button>
+              <button class="u-btn" type="button">✉</button>
+              <button class="u-btn" type="button">♫</button>
+              <button class="u-btn" type="button">☾</button>
+            </div>
+            <div class="center-pad">
+              <button class="nav up" type="button">△</button>
+              <button class="nav left" type="button">◁</button>
+              <button class="ok-btn" id="okCenter" type="button">OK</button>
+              <button class="nav right" type="button">▷</button>
+              <button class="nav down" type="button">▽</button>
+            </div>
+          </div>
+
+          <div class="control-strip">
+            <button class="strip-btn" id="toggle" type="button">ABC / 123</button>
+            <button class="strip-btn" id="delete" type="button">⌫ CLEAR</button>
+            <button class="strip-btn confirm" id="unlock" type="button">UNLOCK</button>
+          </div>
+
+          <div class="keypad" aria-label="數字鍵盤">
+            <button class="key" type="button" data-key="1"><span class="num">1</span><span class="letters">&nbsp;</span></button>
+            <button class="key" type="button" data-key="2"><span class="num">2</span><span class="letters">ABC</span></button>
+            <button class="key" type="button" data-key="3"><span class="num">3</span><span class="letters">DEF</span></button>
+            <button class="key" type="button" data-key="4"><span class="num">4</span><span class="letters">GHI</span></button>
+            <button class="key" type="button" data-key="5"><span class="num">5</span><span class="letters">JKL</span></button>
+            <button class="key" type="button" data-key="6"><span class="num">6</span><span class="letters">MNO</span></button>
+            <button class="key" type="button" data-key="7"><span class="num">7</span><span class="letters">PQRS</span></button>
+            <button class="key" type="button" data-key="8"><span class="num">8</span><span class="letters">TUV</span></button>
+            <button class="key" type="button" data-key="9"><span class="num">9</span><span class="letters">WXYZ</span></button>
+            <button class="key" type="button" data-key="*"><span class="num">*</span><span class="letters">&nbsp;</span></button>
+            <button class="key" type="button" data-key="0"><span class="num">0</span><span class="letters">SPACE</span></button>
+            <button class="key" type="button" data-key="#"><span class="num">#</span><span class="letters">&nbsp;</span></button>
+          </div>
+        </section>
+
+        <div class="charm" aria-hidden="true">
+          <div class="loop"></div>
+          <div class="beads">
+            <span>⭐</span>
+            <span>💗</span>
+            <span>🧸</span>
+            <span>🦋</span>
+            <span>🌼</span>
           </div>
         </div>
-      </section>
-      <div class="hinge" aria-hidden="true"></div>
-      <section class="bottom" aria-label="手機按鍵">
-        <p class="small-logo">STARLINE / 01</p>
-        <div class="controls">
-          <button class="mini" id="toggle" type="button" aria-label="切換數字和英文輸入模式">ABC / 123</button>
-          <button class="mini" id="delete" type="button" aria-label="刪除最後一個字">⌫ 清除</button>
-          <button class="mini call" id="call" type="button" aria-label="確認暗號並前往頁面">☎ 撥號</button>
-        </div>
-        <div class="keys" aria-label="數字鍵盤">
-          <button class="key" type="button" data-key="1"><span class="num">1</span><span class="letters">&nbsp;</span></button>
-          <button class="key" type="button" data-key="2"><span class="num">2</span><span class="letters">ABC</span></button>
-          <button class="key" type="button" data-key="3"><span class="num">3</span><span class="letters">DEF</span></button>
-          <button class="key" type="button" data-key="4"><span class="num">4</span><span class="letters">GHI</span></button>
-          <button class="key" type="button" data-key="5"><span class="num">5</span><span class="letters">JKL</span></button>
-          <button class="key" type="button" data-key="6"><span class="num">6</span><span class="letters">MNO</span></button>
-          <button class="key" type="button" data-key="7"><span class="num">7</span><span class="letters">PQRS</span></button>
-          <button class="key" type="button" data-key="8"><span class="num">8</span><span class="letters">TUV</span></button>
-          <button class="key" type="button" data-key="9"><span class="num">9</span><span class="letters">WXYZ</span></button>
-          <button class="key" type="button" data-key="*"><span class="num">*</span><span class="letters">&nbsp;</span></button>
-          <button class="key" type="button" data-key="0"><span class="num">0</span><span class="letters">SPACE</span></button>
-          <button class="key" type="button" data-key="#"><span class="num">#</span><span class="letters">&nbsp;</span></button>
-        </div>
-      </section>
+      </div>
+
+      <p class="owner-note">示範暗號：<strong>1234</strong>、<strong>STAR</strong><br>輸入後會直接在手機螢幕內開啟內容，不會跳到新頁面。</p>
     </div>
-    <p class="phone-foot">試玩暗號：<strong>1234</strong> 或 <strong>STAR</strong><br />數字直接按；英文先切換 ABC 模式，再連按對應按鍵。</p>
   </main>
 
   <script>
-    // ⭐ 要修改「暗號 → 網頁」，只改下面這段就可以。
-    // 左邊是暗號；右邊是要前往的檔名或網址。
-    const routes = {
-      "1234": "page-1.html",
-      "STAR": "page-2.html"
+    // =========================
+    // 你之後只要改下面這幾塊就可以
+    // =========================
+
+    // 1) 手機主人 / 網站標題
+    const PHONE_OWNER = 'LUNA';
+    const SITE_TITLE = "LUNA'S PHONE";
+    const SITE_SUBTITLE = '輸入暗號後，直接在手機螢幕裡解鎖內容';
+
+    // 2) 暗號對應內容
+    // 左邊 key 是暗號，右邊是手機螢幕解鎖後要顯示的內容
+    const phoneContents = {
+      '1234': {
+        label: 'PROFILE',
+        title: '角色基本設定',
+        emoji: '✦',
+        body: '名字：Luna\n身份：你角色持有的手機主人\n風格關鍵字：Y2K、甜酷、閃亮、收藏貼紙\n這裡可以改成你角色的基本資料、性格、背景設定。',
+        tags: ['OWNER', 'PROFILE', 'Y2K']
+      },
+      'STAR': {
+        label: 'MEMO',
+        title: '私人備忘錄',
+        emoji: '★',
+        body: '今天也把手機裝飾得亮晶晶。\n\n這裡可以放角色日記、世界觀筆記、關係圖摘要，或任何你想藏在手機裡的內容。',
+        tags: ['DIARY', 'NOTE', 'PRIVATE']
+      }
     };
 
+    // =========================
+    // 以下不用改
+    // =========================
     const display = document.getElementById('display');
     const hint = document.getElementById('hint');
-    const mode = document.getElementById('mode');
-    const clock = document.getElementById('clock');
+    const modeLabel = document.getElementById('modeLabel');
+    const clockSmall = document.getElementById('clockSmall');
+    const clockLarge = document.getElementById('clockLarge');
+    const dateLine = document.getElementById('dateLine');
+    const screenView = document.getElementById('screenView');
+    const screenBack = document.getElementById('screenBack');
+    const screenHome = document.getElementById('screenHome');
+    const ownerLine = document.getElementById('ownerLine');
+    const siteTitle = document.getElementById('siteTitle');
+    const siteSubtitle = document.getElementById('siteSubtitle');
+    const phoneBrand = document.getElementById('phoneBrand');
+
     const letters = { 2: 'ABC', 3: 'DEF', 4: 'GHI', 5: 'JKL', 6: 'MNO', 7: 'PQRS', 8: 'TUV', 9: 'WXYZ' };
     let value = '';
     let alphaMode = false;
     let lastKey = '';
     let lastAt = 0;
     let letterIndex = 0;
-    let navigating = false;
+    let currentView = 'lock';
 
-    function render(message) {
-      display.textContent = value || '_ _ _ _';
-      display.classList.toggle('empty', !value);
-      if (message) hint.textContent = message;
-      else hint.textContent = alphaMode ? '同一個數字連按可切換英文字母' : '請輸入暗號，再按綠色「撥號」';
-      display.scrollLeft = display.scrollWidth;
-    }
+    siteTitle.textContent = SITE_TITLE;
+    siteSubtitle.textContent = SITE_SUBTITLE;
+    phoneBrand.textContent = PHONE_OWNER;
+    ownerLine.textContent = `OWNER : ${PHONE_OWNER}`;
+
     function resetMultiTap() { lastKey = ''; lastAt = 0; letterIndex = 0; }
+
+    function renderLock(customHint) {
+      currentView = 'lock';
+      screenView.innerHTML = `
+        <div id="lockView">
+          <div class="clock-large" id="clockLargeInner">${clockSmall.textContent}</div>
+          <div class="date-line" id="dateLineInner">${dateLine.textContent}</div>
+          <div class="tiny-heart" aria-hidden="true">♥</div>
+          <div class="owner-line">OWNER : ${PHONE_OWNER}</div>
+          <div class="unlock-label">ENTER CODE</div>
+          <div class="display ${value ? '' : 'empty'}" id="displayInner">${value || '_ _ _ _'}</div>
+          <div class="small-note" id="hintInner">${customHint || (alphaMode ? 'ABC 模式：同一數字連按可切換英文字母' : '按下方手機鍵盤輸入暗號，再按 OK 解鎖')}</div>
+        </div>
+      `;
+    }
+
+    function renderContent(entry, code) {
+      currentView = 'content';
+      screenView.innerHTML = `
+        <div>
+          <div class="unlock-ok">UNLOCKED : ${code}</div>
+          <div class="content-card">
+            <div class="content-head">
+              <div>
+                <span>${entry.label}</span>
+                <strong>${entry.title}</strong>
+              </div>
+              <div class="content-emoji" aria-hidden="true">${entry.emoji || '✦'}</div>
+            </div>
+            <div class="content-body">${entry.body}</div>
+            <div class="content-tags">${(entry.tags || []).map(tag => `<b>${tag}</b>`).join('')}</div>
+          </div>
+          <div class="small-note" style="margin-top:10px;">按 BACK 可返回鎖定畫面，按 HOME 可清空並回主畫面。</div>
+        </div>
+      `;
+    }
+
+    function updateDisplay(customHint) {
+      if (currentView === 'lock') renderLock(customHint);
+    }
+
     function appendChar(char) {
-      if (navigating || value.length >= 24) return;
+      if (currentView !== 'lock' || value.length >= 24) return;
       value += char;
       resetMultiTap();
-      render();
+      updateDisplay();
     }
+
     function pressKey(key) {
-      if (navigating || value.length >= 24) return;
+      if (currentView !== 'lock' || value.length >= 24) return;
       if (alphaMode && letters[key]) {
         const now = Date.now();
         const group = letters[key];
@@ -173,52 +715,95 @@
         }
         lastKey = key;
         lastAt = now;
-        render();
+        updateDisplay();
       } else if (alphaMode && key === '0') {
         appendChar(' ');
       } else {
         appendChar(key);
       }
     }
-    function erase() { if (navigating) return; value = value.slice(0, -1); resetMultiTap(); render(); }
+
+    function erase() {
+      if (currentView !== 'lock') return;
+      value = value.slice(0, -1);
+      resetMultiTap();
+      updateDisplay();
+    }
+
     function toggleMode() {
-      if (navigating) return;
       alphaMode = !alphaMode;
       resetMultiTap();
-      mode.textContent = alphaMode ? 'MODE: ABC' : 'MODE: 123';
-      render();
+      modeLabel.textContent = alphaMode ? 'MODE : ABC' : 'MODE : 123';
+      updateDisplay();
     }
-    function dial() {
-      if (navigating) return;
+
+    function clearToHome(message) {
+      value = '';
+      resetMultiTap();
+      renderLock(message);
+    }
+
+    function unlock() {
+      if (currentView !== 'lock') return;
       resetMultiTap();
       const code = value.trim().toUpperCase();
-      if (!code) { render('請先輸入暗號'); return; }
-      const destination = routes[code];
-      if (destination) {
-        navigating = true;
-        render('正在接通…');
-        window.setTimeout(() => { window.location.href = destination; }, 320);
-      } else {
-        render('找不到這組暗號，請重新輸入');
+      if (!code) {
+        updateDisplay('請先輸入暗號');
+        return;
       }
+      const entry = phoneContents[code];
+      if (!entry) {
+        updateDisplay('暗號錯誤，請再試一次');
+        return;
+      }
+      renderContent(entry, code);
     }
+
+    function updateClock() {
+      const now = new Date();
+      const timeText = now.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false });
+      const dateText = now.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, ' / ');
+      clockSmall.textContent = timeText;
+      dateLine.textContent = dateText;
+      if (currentView === 'lock') renderLock();
+    }
+
     document.querySelectorAll('[data-key]').forEach((button) => {
       button.addEventListener('click', () => pressKey(button.dataset.key));
     });
     document.getElementById('toggle').addEventListener('click', toggleMode);
     document.getElementById('delete').addEventListener('click', erase);
-    document.getElementById('call').addEventListener('click', dial);
-    document.addEventListener('keydown', (event) => {
-      if (event.altKey || event.ctrlKey || event.metaKey || navigating) return;
-      if (event.key === 'Enter') { event.preventDefault(); dial(); }
-      else if (event.key === 'Backspace') { event.preventDefault(); erase(); }
-      else if (event.key === 'Escape') { value = ''; resetMultiTap(); render(); }
-      else if (/^[a-zA-Z0-9*#]$/.test(event.key)) { appendChar(event.key.toUpperCase()); }
+    document.getElementById('unlock').addEventListener('click', unlock);
+    document.getElementById('okCenter').addEventListener('click', unlock);
+
+    screenBack.addEventListener('click', () => {
+      if (currentView === 'content') renderLock('已返回鎖定畫面');
+      else erase();
     });
-    function updateClock() { clock.textContent = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }); }
+    screenHome.addEventListener('click', () => clearToHome('已回到主畫面'));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.key === 'Enter') { event.preventDefault(); unlock(); return; }
+      if (event.key === 'Backspace') { event.preventDefault(); currentView === 'content' ? renderLock('已返回鎖定畫面') : erase(); return; }
+      if (event.key === 'Escape') { event.preventDefault(); clearToHome('已回到主畫面'); return; }
+
+      if (currentView !== 'lock') return;
+
+      if (/^[a-zA-Z]$/.test(event.key)) {
+        value += event.key.toUpperCase();
+        resetMultiTap();
+        updateDisplay();
+      } else if (/^[0-9*#]$/.test(event.key)) {
+        appendChar(event.key);
+      } else if (event.key === ' ') {
+        appendChar(' ');
+      }
+    });
+
     updateClock();
     window.setInterval(updateClock, 30000);
-    render();
+    renderLock();
   </script>
 </body>
 </html>
