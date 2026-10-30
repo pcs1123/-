@@ -1,0 +1,28 @@
+翻蓋手機網站／簡易使用說明
+
+這個資料夾內的 3 個 HTML 檔案請上傳到同一個 GitHub 儲存庫最外層：
+- index.html　＝　翻蓋手機首頁
+- page-1.html　＝　暗號 1234 對應頁面
+- page-2.html　＝　暗號 STAR 對應頁面
+
+操作：
+1. 按鍵盤輸入 1234，再按綠色「撥號」，會進入第一頁。
+2. 要輸入 STAR，按 ABC / 123 切換至 ABC 模式：
+   S：快速按 7 四次
+   T：按 8 一次
+   A：按 2 一次
+   R：按 7 三次
+   （不同字母之間請至少間隔一秒，或者用電腦鍵盤直接輸入 STAR。）
+3. 點「⌫ 清除」會刪一個字；鍵盤按 Enter 也可以撥號。
+
+在 GitHub 網頁修改暗號：
+1. 點 index.html，點右上角鉛筆圖示（Edit this file）。
+2. Ctrl+F / Command+F 找 const routes。
+3. 修改像這樣的文字：
+    const routes = {
+      "1234": "page-1.html",
+      "STAR": "page-2.html"
+    };
+4. 按 Commit changes 儲存。
+
+注意：這個暗號是跳頁開關，不是真正的登入或保密機制；知道連結的人仍可直接開啟公開頁面。

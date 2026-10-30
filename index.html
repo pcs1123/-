@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="一支通往祕密頁面的復古翻蓋手機。" />
+  <title>秘密通訊｜翻蓋手機入口</title>
+  <style>
+    :root { --ink: #111a34; --blue: #a0e9ed; --cream: #f1f4fd; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; min-height: 100vh; color: #e6e9fc;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: radial-gradient(circle at 50% 18%, #28365b 0, #151d36 32%, #0a0f1e 72%, #070a14 100%);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .42;
+      background-image: radial-gradient(circle, #fff 0 1px, transparent 1.5px);
+      background-size: 83px 97px; background-position: 13px 27px;
+      mask-image: linear-gradient(to bottom, #000, transparent 95%);
+    }
+    main { min-height: 100vh; padding: 35px 16px 45px; display: flex; align-items: center; flex-direction: column; position: relative; }
+    .eyebrow { font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: .35em; color: #adc1eb; margin: 0 0 11px; }
+    h1 { margin: 0; font-size: clamp(20px, 4vw, 27px); font-weight: 700; letter-spacing: .13em; text-align: center; }
+    .subtitle { margin: 10px 0 25px; color: #aeb9d3; font-size: 12px; letter-spacing: .12em; text-align: center; }
+    .phone { width: min(100%, 360px); filter: drop-shadow(0 26px 23px rgba(1,4,16,.5)); }
+    .top {
+      position: relative; padding: 15px 17px 19px; border-radius: 32px 32px 20px 20px;
+      border: 2px solid #e6eaf5;
+      background: linear-gradient(115deg, #bac2da 1%, #f2f5ff 15%, #b0bfda 42%, #f8faff 67%, #8999b8 100%);
+      box-shadow: inset 0 0 0 2px rgba(76,86,123,.3), inset 3px 0 12px rgba(255,255,255,.56), 0 0 0 1px rgba(46,58,92,.4);
+    }
+    .speaker { height: 5px; width: 62px; margin: 2px auto 15px; border-radius: 9px; background: #596780; box-shadow: inset 0 1px 2px #25304b, 0 1px 0 #fff; }
+    .screen-bezel { padding: 11px; background: linear-gradient(135deg, #1e2b40, #090f1e 68%, #485873); border: 2px solid #606e86; border-radius: 15px; box-shadow: inset 0 3px 13px rgba(0,0,0,.72), 0 2px 2px rgba(255,255,255,.55); }
+    .lcd {
+      position: relative; isolation: isolate; height: 226px; overflow: hidden; padding: 12px 14px;
+      border-radius: 6px; color: #c2fbf8; background: linear-gradient(160deg, #123e4a, #092835 58%, #09232f 100%);
+      box-shadow: inset 0 0 24px rgba(2,13,27,.8);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    .lcd::after { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .24; pointer-events: none; background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(0,0,0,.3) 3px 4px); }
+    .lcd::before { content: ""; position: absolute; width: 160px; height: 260px; top: -100px; left: -68px; transform: rotate(29deg); background: linear-gradient(to right, transparent, rgba(255,255,255,.08), transparent); }
+    .screen-top { display: flex; justify-content: space-between; font-size: 10px; letter-spacing: .06em; opacity: .85; }
+    .signal { display: inline-flex; align-items: center; gap: 6px; }
+    .signal i { display:inline-block; width: 6px; height: 6px; border-radius: 50%; background: #96ffdb; box-shadow: 0 0 7px #96ffdb; }
+    .screen-body { text-align: center; margin-top: 28px; }
+    .screen-icon { font-size: 19px; line-height: 1; letter-spacing: .1em; }
+    .screen-label { margin: 11px 0 5px; font-size: 11px; letter-spacing: .22em; color: #8ed2d8; }
+    .display { width:100%; min-height: 37px; padding: 4px 2px; color: #e7fffa; font-size: clamp(18px, 6vw, 25px); font-weight: bold; letter-spacing: .13em; text-shadow: 0 0 13px rgba(146,251,250,.55); white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
+    .display::-webkit-scrollbar { display:none; }
+    .display.empty { color: #5e929a; }
+    .hint { padding: 0 3px; margin: 9px 0 0; height: 27px; font-size: 11px; color: #91bfc7; line-height: 1.4; }
+    .screen-footer { position: absolute; bottom: 10px; left: 14px; right: 14px; display:flex; justify-content:space-between; font-size: 10px; color: #89c4c5; }
+    .screen-footer span:last-child { color: #bdfac8; }
+    .hinge { height: 25px; width: 94%; margin: -2px auto; position: relative; z-index: 2; border: 1px solid #a6b2c9; border-radius: 11px; background: linear-gradient(to bottom, #7d8eab, #e2e8f8 39%, #7586a4 69%, #d0d9e9 100%); box-shadow: inset 0 1px 2px #fff, 0 2px 3px #303955; }
+    .hinge::before, .hinge::after { content:""; position: absolute; width: 31px; top: 2px; bottom: 2px; background: repeating-linear-gradient(to right, #667a9a 0 2px,#b7c2db 2px 5px); border-radius: 3px; }
+    .hinge::before { left: 9px; } .hinge::after { right:9px; }
+    .bottom { position: relative; padding: 18px 26px 23px; border: 2px solid #e7eafa; border-radius: 20px 20px 39px 39px; background: linear-gradient(113deg,#a2aecb 0%,#e9edfa 15%,#c3cde3 52%,#eef1fc 79%,#94a3c0 100%); box-shadow: inset 0 0 0 2px rgba(73,84,116,.28), inset 2px 2px 10px rgba(255,255,255,.8), 0 0 0 1px rgba(31,41,66,.42); }
+    .small-logo { margin: 0 0 13px; color: #687998; font-size: 9px; text-align: center; font-weight: 800; letter-spacing: .44em; }
+    .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin-bottom: 12px; }
+    button { font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+    .mini { min-width: 0; min-height: 38px; border: 1px solid #8898b5; border-bottom: 3px solid #71819e; border-radius: 14px; color: #415171; font-size: 11px; font-weight: 800; background: linear-gradient(#f9fbff,#bbc8e1); box-shadow: 0 2px 3px rgba(73,84,125,.14); }
+    .call { border-color: #42795e; border-bottom-color: #2e6149; background: linear-gradient(#b8ffdb,#57be91); color: #124f3d; font-size: 13px; }
+    .keys { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px 12px; }
+    .key { min-width: 0; min-height: 59px; border-radius: 17px; border: 1px solid #aab5ce; border-bottom: 4px solid #8998b4; background: linear-gradient(154deg,#fff 4%,#e4eaf7 48%,#bfcae1 100%); color: #334262; box-shadow: 0 2px 4px rgba(64,77,105,.16), inset 0 1px 0 #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .num { display: block; font-size: 23px; font-weight: 760; line-height: 1; }
+    .letters { display: block; margin-top: 3px; min-height: 10px; font-size: 9px; font-weight: 800; letter-spacing: .15em; color: #7889a5; }
+    button:active, button.pressed { transform: translateY(2px); filter: brightness(.95); box-shadow: inset 0 2px 6px rgba(20,37,61,.18); }
+    button:focus-visible { outline: 3px solid #59a1c8; outline-offset: 2px; }
+    .phone-foot { margin-top: 19px; font-size: 10px; color: #b0b9d2; letter-spacing: .12em; text-align: center; line-height: 1.8; }
+    .phone-foot strong { color: #e0e7ff; font-weight: 600; }
+    @media (max-width: 390px) { main { padding-top: 25px; } .subtitle { margin-bottom: 19px; } .bottom { padding: 16px 20px 20px; } .keys { gap: 8px 10px; } .key { min-height: 56px; } .lcd { height: 218px; } }
+    @media (prefers-reduced-motion: no-preference) { .phone { animation: rise .6s ease-out both; } @keyframes rise { from { transform: translateY(13px); opacity: .4; } to { transform: translateY(0); opacity: 1; } } }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">✦ PRIVATE FREQUENCY · 2004 ✦</p>
+    <h1>秘密通訊</h1>
+    <p class="subtitle">輸入暗號，接通另一個世界。</p>
+
+    <div class="phone" aria-label="復古翻蓋手機互動鍵盤">
+      <section class="top" aria-label="手機螢幕">
+        <div class="speaker" aria-hidden="true"></div>
+        <div class="screen-bezel">
+          <div class="lcd">
+            <div class="screen-top"><span class="signal"><i></i> SIGNAL 04</span><span id="clock">00:00</span></div>
+            <div class="screen-body">
+              <div class="screen-icon" aria-hidden="true">✦ ☏ ✦</div>
+              <p class="screen-label">ENTER ACCESS CODE</p>
+              <div class="display empty" id="display" aria-live="polite" aria-label="目前輸入的暗號">_ _ _ _</div>
+              <p class="hint" id="hint" aria-live="polite">請用下方按鍵輸入暗號</p>
+            </div>
+            <div class="screen-footer"><span id="mode">MODE: 123</span><span>● CONNECT READY</span></div>
+          </div>
+        </div>
+      </section>
+      <div class="hinge" aria-hidden="true"></div>
+      <section class="bottom" aria-label="手機按鍵">
+        <p class="small-logo">STARLINE / 01</p>
+        <div class="controls">
+          <button class="mini" id="toggle" type="button" aria-label="切換數字和英文輸入模式">ABC / 123</button>
+          <button class="mini" id="delete" type="button" aria-label="刪除最後一個字">⌫ 清除</button>
+          <button class="mini call" id="call" type="button" aria-label="確認暗號並前往頁面">☎ 撥號</button>
+        </div>
+        <div class="keys" aria-label="數字鍵盤">
+          <button class="key" type="button" data-key="1"><span class="num">1</span><span class="letters">&nbsp;</span></button>
+          <button class="key" type="button" data-key="2"><span class="num">2</span><span class="letters">ABC</span></button>
+          <button class="key" type="button" data-key="3"><span class="num">3</span><span class="letters">DEF</span></button>
+          <button class="key" type="button" data-key="4"><span class="num">4</span><span class="letters">GHI</span></button>
+          <button class="key" type="button" data-key="5"><span class="num">5</span><span class="letters">JKL</span></button>
+          <button class="key" type="button" data-key="6"><span class="num">6</span><span class="letters">MNO</span></button>
+          <button class="key" type="button" data-key="7"><span class="num">7</span><span class="letters">PQRS</span></button>
+          <button class="key" type="button" data-key="8"><span class="num">8</span><span class="letters">TUV</span></button>
+          <button class="key" type="button" data-key="9"><span class="num">9</span><span class="letters">WXYZ</span></button>
+          <button class="key" type="button" data-key="*"><span class="num">*</span><span class="letters">&nbsp;</span></button>
+          <button class="key" type="button" data-key="0"><span class="num">0</span><span class="letters">SPACE</span></button>
+          <button class="key" type="button" data-key="#"><span class="num">#</span><span class="letters">&nbsp;</span></button>
+        </div>
+      </section>
+    </div>
+    <p class="phone-foot">試玩暗號：<strong>1234</strong> 或 <strong>STAR</strong><br />數字直接按；英文先切換 ABC 模式，再連按對應按鍵。</p>
+  </main>
+
+  <script>
+    // ⭐ 要修改「暗號 → 網頁」，只改下面這段就可以。
+    // 左邊是暗號；右邊是要前往的檔名或網址。
+    const routes = {
+      "1234": "page-1.html",
+      "STAR": "page-2.html"
+    };
+
+    const display = document.getElementById('display');
+    const hint = document.getElementById('hint');
+    const mode = document.getElementById('mode');
+    const clock = document.getElementById('clock');
+    const letters = { 2: 'ABC', 3: 'DEF', 4: 'GHI', 5: 'JKL', 6: 'MNO', 7: 'PQRS', 8: 'TUV', 9: 'WXYZ' };
+    let value = '';
+    let alphaMode = false;
+    let lastKey = '';
+    let lastAt = 0;
+    let letterIndex = 0;
+    let navigating = false;
+
+    function render(message) {
+      display.textContent = value || '_ _ _ _';
+      display.classList.toggle('empty', !value);
+      if (message) hint.textContent = message;
+      else hint.textContent = alphaMode ? '同一個數字連按可切換英文字母' : '請輸入暗號，再按綠色「撥號」';
+      display.scrollLeft = display.scrollWidth;
+    }
+    function resetMultiTap() { lastKey = ''; lastAt = 0; letterIndex = 0; }
+    function appendChar(char) {
+      if (navigating || value.length >= 24) return;
+      value += char;
+      resetMultiTap();
+      render();
+    }
+    function pressKey(key) {
+      if (navigating || value.length >= 24) return;
+      if (alphaMode && letters[key]) {
+        const now = Date.now();
+        const group = letters[key];
+        if (lastKey === key && now - lastAt < 950 && value.length > 0) {
+          letterIndex = (letterIndex + 1) % group.length;
+          value = value.slice(0, -1) + group[letterIndex];
+        } else {
+          letterIndex = 0;
+          value += group[letterIndex];
+        }
+        lastKey = key;
+        lastAt = now;
+        render();
+      } else if (alphaMode && key === '0') {
+        appendChar(' ');
+      } else {
+        appendChar(key);
+      }
+    }
+    function erase() { if (navigating) return; value = value.slice(0, -1); resetMultiTap(); render(); }
+    function toggleMode() {
+      if (navigating) return;
+      alphaMode = !alphaMode;
+      resetMultiTap();
+      mode.textContent = alphaMode ? 'MODE: ABC' : 'MODE: 123';
+      render();
+    }
+    function dial() {
+      if (navigating) return;
+      resetMultiTap();
+      const code = value.trim().toUpperCase();
+      if (!code) { render('請先輸入暗號'); return; }
+      const destination = routes[code];
+      if (destination) {
+        navigating = true;
+        render('正在接通…');
+        window.setTimeout(() => { window.location.href = destination; }, 320);
+      } else {
+        render('找不到這組暗號，請重新輸入');
+      }
+    }
+    document.querySelectorAll('[data-key]').forEach((button) => {
+      button.addEventListener('click', () => pressKey(button.dataset.key));
+    });
+    document.getElementById('toggle').addEventListener('click', toggleMode);
+    document.getElementById('delete').addEventListener('click', erase);
+    document.getElementById('call').addEventListener('click', dial);
+    document.addEventListener('keydown', (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey || navigating) return;
+      if (event.key === 'Enter') { event.preventDefault(); dial(); }
+      else if (event.key === 'Backspace') { event.preventDefault(); erase(); }
+      else if (event.key === 'Escape') { value = ''; resetMultiTap(); render(); }
+      else if (/^[a-zA-Z0-9*#]$/.test(event.key)) { appendChar(event.key.toUpperCase()); }
+    });
+    function updateClock() { clock.textContent = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false }); }
+    updateClock();
+    window.setInterval(updateClock, 30000);
+    render();
+  </script>
+</body>
+</html>
