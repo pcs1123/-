@@ -1,809 +1,673 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f7c9e8" />
-  <meta name="description" content="角色持有的 Y2K 翻蓋手機網站。" />
-  <title>角色手機｜Y2K 翻蓋手機</title>
-  <style>
-    :root {
-      --bg1: #fff8fd;
-      --bg2: #f4eefb;
-      --line: #4a3854;
-      --silver1: #f9f6fb;
-      --silver2: #f0e8f3;
-      --silver3: #d6ceda;
-      --pink1: #ff92c7;
-      --pink2: #f46aaf;
-      --pink3: #ffd9ee;
-      --lav: #d9b5ff;
-      --blue: #a8ecff;
-      --mint: #cbffe3;
-      --lcd1: #ddffd4;
-      --lcd2: #c7f4bd;
-      --lcdInk: #213120;
-      --shadow: rgba(84, 41, 90, 0.18);
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, -apple-system, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-      color: #513d58;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,.95), transparent 25%),
-        radial-gradient(circle at 85% 12%, rgba(255,212,240,.75), transparent 18%),
-        radial-gradient(circle at 20% 78%, rgba(207,243,255,.6), transparent 17%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      overflow-x: hidden;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .48;
-      background-image:
-        linear-gradient(transparent 95%, rgba(255,255,255,.28) 100%),
-        radial-gradient(circle at 15px 15px, rgba(255,255,255,.8) 2px, transparent 3px),
-        radial-gradient(circle at 75px 40px, rgba(255,184,221,.32) 3px, transparent 4px),
-        radial-gradient(circle at 35px 85px, rgba(174,229,255,.28) 3px, transparent 4px);
-      background-size: 100% 100%, 120px 120px, 160px 160px, 190px 190px;
-    }
-    main {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 20px 14px 32px;
-      position: relative;
-      isolation: isolate;
-    }
-    .wrap { width: min(100%, 420px); }
-    .page-tag {
-      text-align: center;
-      font-size: 11px;
-      letter-spacing: .22em;
-      color: #b27aa2;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-    .headline {
-      text-align: center;
-      margin: 0 0 18px;
-      line-height: 1.35;
-    }
-    .headline strong {
-      display: block;
-      font-size: clamp(24px, 5vw, 30px);
-      letter-spacing: .08em;
-      color: #6d4d71;
-      text-shadow: 0 1px 0 #fff;
-    }
-    .headline span {
-      display: block;
-      margin-top: 5px;
-      font-size: 12px;
-      letter-spacing: .14em;
-      color: #a67f99;
-    }
-    .phone {
-      width: 100%;
-      filter: drop-shadow(0 24px 28px rgba(137, 93, 137, .18));
-      position: relative;
-    }
-    .top-shell, .bottom-shell {
-      border: 2px solid #fdf7ff;
-      background:
-        linear-gradient(140deg, #ffffff, #f4ecf6 18%, #dad0db 34%, #fdfcff 51%, #ddd2e0 69%, #f8f4fa 84%, #cec3d1 100%);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.9),
-        inset 5px 5px 12px rgba(255,255,255,.65),
-        inset -5px -6px 15px rgba(173,148,176,.2),
-        0 4px 12px rgba(111, 78, 117, .12);
-    }
-    .top-shell {
-      position: relative;
-      border-radius: 38px 38px 22px 22px;
-      padding: 14px 18px 18px;
-    }
-    .cam-bar {
-      width: 65px;
-      height: 6px;
-      border-radius: 999px;
-      margin: 0 auto 10px;
-      background: #b57aa2;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
-    }
-    .decor {
-      position: absolute;
-      z-index: 2;
-      user-select: none;
-      line-height: 1;
-    }
-    .flower { top: 10px; left: 18px; font-size: 26px; transform: rotate(-8deg); }
-    .badge {
-      top: 12px; right: 18px;
-      background: linear-gradient(180deg, #ffb7d8, #ff83bd);
-      border: 2px solid #fff0f8;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 800;
-      color: #6c2f51;
-      transform: rotate(11deg);
-      box-shadow: 0 2px 6px rgba(198, 74, 136, .22);
-    }
-    .rainbow { bottom: 12px; left: 20px; font-size: 30px; transform: rotate(-8deg); }
-    .icons {
-      bottom: 18px; right: 16px; display: flex; gap: 6px; font-size: 20px;
-    }
-    .screen-frame {
-      position: relative;
-      border-radius: 20px;
-      padding: 12px;
-      border: 2px solid #514152;
-      background: linear-gradient(145deg, #ff79bc, #f452a4 52%, #ce3d8f 100%);
-      box-shadow: inset 0 2px 4px rgba(255,255,255,.45), 0 2px 0 rgba(255,255,255,.7);
-    }
-    .brand {
-      position: absolute;
-      top: 10px; left: 50%; transform: translateX(-50%);
-      font-weight: 900; font-size: 12px; letter-spacing: .18em; color: #261124;
-      text-shadow: 0 1px 0 rgba(255,255,255,.28);
-      z-index: 2;
-    }
-    .lcd {
-      position: relative;
-      overflow: hidden;
-      border-radius: 7px;
-      border: 2px solid #2f3135;
-      background: linear-gradient(180deg, var(--lcd1), var(--lcd2));
-      color: var(--lcdInk);
-      min-height: 258px;
-      padding: 14px 14px 12px;
-      box-shadow: inset 0 0 18px rgba(60,96,44,.2), inset 0 0 0 1px rgba(255,255,255,.6);
-      font-family: "Courier New", ui-monospace, monospace;
-    }
-    .lcd::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(to bottom, rgba(255,255,255,.07) 0 2px, rgba(0,0,0,.04) 2px 3px);
-      opacity: .35;
-      pointer-events: none;
-    }
-    .lcd::after {
-      content: "";
-      position: absolute;
-      width: 150px;
-      height: 240px;
-      top: -90px;
-      left: -40px;
-      transform: rotate(26deg);
-      background: linear-gradient(to right, transparent, rgba(255,255,255,.25), transparent);
-      pointer-events: none;
-    }
-    .status, .softkeys {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .08em;
-    }
-    .bars {
-      display: inline-flex;
-      align-items: flex-end;
-      gap: 2px;
-      margin-left: 4px;
-      vertical-align: middle;
-    }
-    .bars i {
-      display: block; width: 3px; background: var(--lcdInk); border-radius: 2px;
-    }
-    .bars i:nth-child(1) { height: 4px; }
-    .bars i:nth-child(2) { height: 6px; }
-    .bars i:nth-child(3) { height: 8px; }
-    .bars i:nth-child(4) { height: 10px; }
-    .view {
-      position: relative;
-      z-index: 1;
-      min-height: 208px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      padding: 8px 2px 0;
-    }
-    .clock-large {
-      font-size: clamp(34px, 10vw, 52px);
-      line-height: 1;
-      letter-spacing: -.06em;
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-    .date-line, .owner-line, .small-note, .code-line {
-      font-size: 11px;
-      letter-spacing: .08em;
-    }
-    .owner-line { margin-top: 10px; font-weight: 700; }
-    .tiny-heart { margin-top: 9px; font-size: 20px; }
-    .unlock-label {
-      margin: 14px 0 6px;
-      font-size: 12px;
-      letter-spacing: .18em;
-      font-weight: 700;
-    }
-    .display {
-      min-height: 28px;
-      font-size: clamp(20px, 5vw, 25px);
-      font-weight: 700;
-      letter-spacing: .14em;
-      white-space: nowrap;
-      overflow-x: auto;
-      scrollbar-width: none;
-      text-transform: uppercase;
-    }
-    .display::-webkit-scrollbar { display: none; }
-    .display.empty { opacity: .5; }
-    .small-note { min-height: 30px; line-height: 1.35; margin-top: 7px; }
-    .content-card {
-      text-align: left;
-      border: 1.5px solid rgba(33,49,32,.7);
-      border-radius: 10px;
-      background: rgba(255,255,255,.2);
-      padding: 10px 11px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.24);
-    }
-    .content-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 8px;
-      margin-bottom: 9px;
-    }
-    .content-head strong {
-      display: block; font-size: 16px; line-height: 1.2;
-    }
-    .content-head span { font-size: 11px; }
-    .content-emoji { font-size: 18px; }
-    .content-body {
-      white-space: pre-line;
-      font-size: 13px;
-      line-height: 1.55;
-      min-height: 98px;
-    }
-    .content-tags {
-      margin-top: 8px;
-      font-size: 11px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .content-tags b {
-      border: 1px solid rgba(33,49,32,.65);
-      border-radius: 999px;
-      padding: 2px 7px;
-      font-weight: 700;
-      background: rgba(255,255,255,.18);
-    }
-    .unlock-ok {
-      font-size: 13px; font-weight: 700; margin-bottom: 10px;
-    }
-    .softkeys {
-      margin-top: 8px;
-    }
-    .softkeys button {
-      appearance: none;
-      border: 0;
-      background: transparent;
-      color: var(--lcdInk);
-      font-family: inherit;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 0;
-      cursor: pointer;
-    }
-    .hinge {
-      width: 95%;
-      height: 24px;
-      margin: -1px auto;
-      border-radius: 14px;
-      border: 2px solid #f8f3fa;
-      background: linear-gradient(180deg, #e1d7e5, #cac0cf 50%, #f7f4f9 100%);
-      position: relative;
-      z-index: 2;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 3px 6px rgba(125,95,131,.12);
-    }
-    .hinge::before, .hinge::after {
-      content: "";
-      position: absolute; top: 4px; bottom: 4px; width: 34px; border-radius: 6px;
-      background: repeating-linear-gradient(90deg, rgba(255,255,255,.88) 0 4px, rgba(197,184,200,.9) 4px 8px);
-    }
-    .hinge::before { left: 12px; }
-    .hinge::after { right: 12px; }
-    .bottom-shell {
-      position: relative;
-      border-radius: 24px 24px 46px 46px;
-      padding: 16px 20px 22px;
-    }
-    .brand-row {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 10px;
-      font-size: 11px;
-      color: #9d7ea2;
-      letter-spacing: .18em;
-      font-weight: 800;
-    }
-    .nav-pad { width: 146px; margin: 0 auto 10px; }
-    .utility-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .u-btn {
-      min-height: 34px;
-      border-radius: 11px;
-      border: 1px solid #fdf7ff;
-      background: linear-gradient(180deg, #ffe9f6, #e8e0ef);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 2px 5px rgba(143,111,151,.14);
-      color: #7b5575;
-      font-size: 14px;
-      font-weight: 800;
-    }
-    .center-pad {
-      display: grid;
-      grid-template-columns: 38px 70px 38px;
-      grid-template-rows: 32px 68px 32px;
-      gap: 5px;
-      justify-content: center;
-      align-items: center;
-      margin: 0 auto;
-    }
-    .nav, .ok-btn {
-      border-radius: 16px;
-      border: 1px solid #fdf7ff;
-      background: linear-gradient(180deg, #ffb0d5, #f67eb8);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 2px 5px rgba(191,77,136,.18);
-      color: #5f2241;
-      font-weight: 800;
-    }
-    .nav { min-height: 32px; }
-    .ok-btn {
-      grid-column: 2; grid-row: 2;
-      min-height: 68px;
-      border-radius: 999px;
-      font-size: 22px;
-    }
-    .up { grid-column: 2; grid-row: 1; }
-    .left { grid-column: 1; grid-row: 2; }
-    .right { grid-column: 3; grid-row: 2; }
-    .down { grid-column: 2; grid-row: 3; }
-    .control-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin: 11px 0 10px;
-    }
-    .strip-btn {
-      min-height: 36px;
-      border-radius: 13px;
-      border: 1px solid #fdf7ff;
-      color: #704c6b;
-      font-size: 12px;
-      font-weight: 800;
-      background: linear-gradient(180deg, #fff1f8, #ebe2f0);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 4px rgba(141,112,146,.14);
-    }
-    .strip-btn.confirm {
-      background: linear-gradient(180deg, #d9ffe8, #a7efc1);
-      color: #2e5f3a;
-    }
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 9px 10px;
-    }
-    .key {
-      min-height: 53px;
-      border-radius: 17px;
-      border: 1px solid #fff6fb;
-      background: linear-gradient(180deg, #ff85c1, #f669af 53%, #ed5aa5 100%);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 3px 6px rgba(180,71,132,.22);
-      color: #fff7fc;
-      text-shadow: 0 1px 0 rgba(111,37,76,.4);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-family: inherit;
-    }
-    .key .num { font-size: 22px; font-weight: 900; line-height: 1; }
-    .key .letters { font-size: 9px; font-weight: 800; letter-spacing: .12em; margin-top: 3px; }
-    button {
-      font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
-    }
-    button:active, button.pressed {
-      transform: translateY(2px);
-      filter: brightness(.97);
-    }
-    button:focus-visible {
-      outline: 3px solid #9de5ff;
-      outline-offset: 2px;
-    }
-    .charm {
-      position: absolute;
-      right: -8px;
-      bottom: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      transform: rotate(6deg);
-      user-select: none;
-      pointer-events: none;
-    }
-    .loop {
-      width: 18px;
-      height: 60px;
-      border: 3px solid #7b607d;
-      border-left-color: transparent;
-      border-bottom-color: transparent;
-      border-radius: 999px;
-      transform: translateX(-10px) rotate(-18deg);
-      opacity: .75;
-    }
-    .beads {
-      display: flex; flex-direction: column; align-items: center; gap: 2px;
-      background: rgba(255,255,255,.55);
-      border: 2px solid rgba(255,255,255,.55);
-      border-radius: 999px;
-      padding: 7px 8px 9px;
-      box-shadow: 0 5px 10px rgba(143,111,151,.15);
-    }
-    .beads span { font-size: 18px; line-height: 1; }
-    .owner-note {
-      text-align: center;
-      margin-top: 16px;
-      color: #a07e97;
-      font-size: 12px;
-      line-height: 1.7;
-      letter-spacing: .05em;
-    }
-    .owner-note strong { color: #76546f; }
-    @media (max-width: 420px) {
-      .top-shell { padding: 13px 14px 16px; }
-      .bottom-shell { padding: 15px 16px 20px; }
-      .lcd { min-height: 248px; }
-      .key { min-height: 50px; }
-      .charm { right: -2px; transform: scale(.95) rotate(6deg); }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#e8e1e5">
+<title>kazami★彡 · Flip Phone</title>
+<style>
+:root{
+  --pink:#e6dde2;--pink-high:#f7f2f4;--pink-dark:#c7b8c1;
+  --pink-shadow:#b19fa8;--ink:#7c6c76;--key:#f2eaee;
+  --screen-h:384px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 15%,#fffefd,#f8f1f3 48%,#eee6ec 100%);color:#765369;font-family:Arial,"Hiragino Kaku Gothic ProN","Noto Sans TC","Microsoft JhengHei",sans-serif;overflow-x:hidden}
+button,input{font:inherit}
+button{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible{outline:2px solid #ad4e7f;outline-offset:3px}
+button:active{filter:brightness(.95)}
+main{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 10px 28px}
+.scene{width:288px;max-width:calc(100vw - 24px);position:relative;perspective:1800px;transition:height 1.85s cubic-bezier(.22,.61,.2,1);height:603px;flex:none}
+.scene.is-open{height:1080px}
+/* A single moving hinge: both faces share exactly the same axis. */
+.flip{position:absolute;left:0;top:-460px;width:100%;height:460px;z-index:8;transform-origin:50% 100%;transform:rotateX(-180deg);transform-style:preserve-3d;transition:top 1.85s cubic-bezier(.22,.61,.2,1),transform 1.85s cubic-bezier(.22,.61,.2,1);will-change:transform,top}
+.scene.is-open .flip{top:17px;transform:rotateX(0deg)}
+.lid{position:absolute;inset:0;width:100%;height:460px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:translateZ(1px);pointer-events:auto}
+.scene:not(.is-open) .lid{pointer-events:none}
+
+.lid-shell,.base,.cover{
+  background:linear-gradient(100deg, #c98da2 0%,#ebbac9 7%,#edb8c9 44%,#e5adbf 79%,#c994aa 100%);
+  border:1.5px solid #b77e94;
+  box-shadow:inset 2px 2px 3px rgba(255,242,245,.85),inset -3px -2px 5px rgba(123,66,92,.19),0 10px 20px rgba(81,42,61,.17);
+}
+.lid-shell{width:100%;height:460px;border-radius:31px 31px 12px 12px;position:relative;padding:29px 15px 14px}
+.speaker{width:41px;height:6px;border-radius:20px;margin:0 auto 24px;background:#382b36;border:1px solid #bd8ca0;box-shadow:inset 0 1px 2px #110e11,0 1px 0 #ffe4e7}
+.lcd-bezel{height:365px;padding:4px;background:#19181a;border:1.5px solid #6b4259;border-radius:5px;box-shadow:0 2px 2px rgba(75,43,52,.25),inset 0 0 0 1px #2b242d}
+.screen{height:var(--screen-h);position:relative;overflow:hidden;border-radius:1px;color:#fff;isolation:isolate;background:#e4bcd0}
+.screen-wallpaper{position:absolute;inset:0;z-index:-2;background:linear-gradient(155deg,#f9e8ef 0%,#eeb9cd 39%,#c59db9 100%);background-position:center;background-size:cover;transition:background-image .15s}
+.default-decor{position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 70% 25%,rgba(255,255,255,.72),transparent 24%),radial-gradient(circle at 28% 54%,rgba(255,239,244,.8),transparent 23%),linear-gradient(145deg,transparent,rgba(113,58,101,.16))}
+.default-decor::before{content:"✧";position:absolute;left:19px;top:65px;font-size:94px;color:rgba(255,255,255,.5)}
+.default-decor::after{content:"♡";position:absolute;right:12px;bottom:69px;font-size:109px;color:rgba(255,255,255,.37)}
+.screen.has-wallpaper .default-decor{display:none}
+.screen::after{content:"";position:absolute;inset:0;z-index:9;pointer-events:none;background:linear-gradient(110deg,rgba(255,255,255,.13),transparent 38%,rgba(0,0,0,.035) 90%)}
+.status{position:absolute;top:0;left:0;right:0;height:23px;display:flex;align-items:center;justify-content:space-between;padding:2px 7px;color:#fff;font-size:10px;letter-spacing:.01em;text-shadow:0 1px 3px #6c5b6e;background:linear-gradient(180deg,rgba(45,35,53,.21),transparent);z-index:4}
+.signal{font-size:10px;font-weight:bold}
+.screen-content{position:absolute;inset:23px 0 32px;overflow:auto;z-index:2;scrollbar-width:thin;scrollbar-color:#d7b1c5 transparent}
+.screen-footer{position:absolute;bottom:0;height:32px;left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:0 8px;background:rgba(69,42,62,.49);backdrop-filter:blur(4px);color:white;font-size:10px;font-weight:600}
+.soft-button{background:none;border:0;color:inherit;padding:8px 2px;min-width:34px;font-size:10px;font-weight:700}
+.lid-camera{position:absolute;right:19px;bottom:7px;width:7px;height:7px;border-radius:50%;border:2px solid #c18a9e;background:#633e59;box-shadow:0 1px 0 #ffdae3}
+.hinge{position:absolute;top:463px;left:0;right:0;height:27px;z-index:10;display:flex;align-items:center;pointer-events:none;transition:top 1.85s cubic-bezier(.22,.61,.2,1)}
+.hinge::before,.hinge::after{content:"";width:24%;height:26px;border:1px solid #bc879b;background:linear-gradient(#eec4d0,#b47c92 45%,#f2c0d1 85%,#aa6f86);border-radius:10px;box-shadow:inset 0 2px 2px #f8d6de}
+.hinge span{flex:1;height:29px;border:1px solid #ad708b;border-radius:8px;background:linear-gradient(180deg,#d49bad,#f9d3dd 20%,#cc92a6 56%,#eeb7c8 84%,#a96985 100%);box-shadow:inset 0 1px 3px rgba(255,255,255,.8)}
+.scene:not(.is-open) .hinge{top:-14px}
+.base{position:absolute;top:0;left:0;width:100%;height:603px;border-radius:13px 13px 31px 31px;padding:35px 22px 16px;transition:top 1.85s cubic-bezier(.22,.61,.2,1);z-index:3;overflow:hidden}
+.scene.is-open .base{top:477px}
+.brand-name{text-align:center;color:#7f3b5a;font-size:15px;font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:-.025em;text-shadow:0 1px 0 #ffdfeb;height:28px}
+.brand-name b{font-size:15px}
+.control-area{display:grid;grid-template-columns:43px 1fr 43px;gap:7px;align-items:center;margin:8px 0 10px}
+.side-controls{display:flex;flex-direction:column;gap:14px;align-items:center}
+.circle-utility{width:40px;height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #c18ba0;border-radius:50%;background:linear-gradient(145deg,#f7d9e0,#e8acbf);box-shadow:inset 1px 2px 2px #fff0f3,0 2px 2px #bd859b;color:#87435f;padding:0}
+.circle-utility svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.circle-utility .mini-jp{font-size:8px;letter-spacing:-.06em;white-space:nowrap;font-weight:700}
+.round-pad{width:118px;height:118px;border-radius:50%;position:relative;margin:auto;background:linear-gradient(145deg,#f5c8d7,#cf91a8);border:2px solid #c18ba0;box-shadow:inset 2px 2px 3px rgba(255,247,249,.9),0 2px 3px rgba(109,66,84,.22)}
+.round-pad button{position:absolute;border:0;background:transparent;color:#84405e;padding:0}
+.arrow-up{top:3px;left:43px;width:28px;height:25px;font-size:17px}
+.arrow-down{bottom:3px;left:43px;width:28px;height:25px;font-size:17px}
+.arrow-left{top:43px;left:0;width:28px;height:28px;font-size:18px}
+.arrow-right{top:43px;right:0;width:28px;height:28px;font-size:18px}
+.round-pad .circle-ok{left:33px;top:33px;width:48px;height:48px;border-radius:50%;border:1.5px solid #a96e8a;background:radial-gradient(circle at 39% 32%,#a46a83,#89516d 75%);box-shadow:inset 1px 2px 4px rgba(62,37,56,.37),0 1px 1px #ffe1ec;font-size:0}
+.command-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0 0 9px}
+.command{height:34px;border-radius:6px;border:1px solid #c38c9e;background:linear-gradient(#f7d5de,#e9b7c8);color:#7e3e5a;box-shadow:inset 0 1px 1px #fff4f6,0 1px 2px rgba(149,82,117,.16);display:flex;align-items:center;justify-content:center;gap:3px;padding:0 2px;font-size:12px;font-weight:bold}
+.command svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.command small{font-size:8px}
+.keypad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px 8px}
+.number-key{height:47px;min-width:0;border:1px solid #d5a2b4;border-radius:5px;background:linear-gradient(155deg,#ffdee8 0%,#f2c1d0 66%,#e9adbf 100%);color:#4d3445;box-shadow:inset 0 1px 1px #fff5f8,0 1px 2px rgba(120,70,94,.16);display:flex;align-items:center;justify-content:center;gap:2px;padding:2px 3px;text-shadow:0 1px 0 #fff2f5}
+.number-key .num{font-family:Arial,sans-serif;font-size:28px;font-weight:400;line-height:1}
+.number-key .key-sub{display:flex;flex-direction:column;gap:1px;align-items:flex-start;min-width:0}
+.number-key .kana{font-size:10px;white-space:nowrap;line-height:1.05}
+.number-key .letters{font-size:7px;white-space:nowrap;line-height:1}
+.number-key[data-key="*"] .num,.number-key[data-key="#"] .num{font-size:29px}
+.speedrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 0}
+.speedkey{height:30px;border-radius:4px;border:1px solid #d5a1b6;background:linear-gradient(#f6cbd7,#e8b0c2);box-shadow:inset 0 1px 1px #fff6f8;color:#7f4861;font:18px Georgia,serif}
+.bottom-label{display:flex;justify-content:space-between;font-size:8px;color:#a36e84;padding:17px 3px 0}
+.mic{width:3px;height:3px;border-radius:50%;background:#83516b;position:absolute;bottom:16px;left:50%}
+.cover{position:absolute;top:100%;left:0;width:100%;height:603px;border-radius:27px 27px 32px 32px;transform-origin:50% 0;transform:rotateX(180deg) translateZ(1px);backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;padding:0;pointer-events:auto}
+.scene.is-open .cover{pointer-events:none}
+.cover::before{content:"";position:absolute;inset:32px 12px 15px;border:1px solid rgba(255,235,241,.38);border-radius:22px 22px 30px 30px;pointer-events:none}
+.cover-title{position:absolute;top:68px;left:0;width:100%;font-family:Georgia,serif;text-align:center;font-size:19px;color:#a56a80;letter-spacing:-.01em}
+.cover-gloss{position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.2) 26%,transparent 45%);pointer-events:none}
+.cover-display{position:absolute;top:207px;left:50%;transform:translateX(-50%);width:61px;height:210px;border:2px solid #b07b95;background:linear-gradient(180deg,#bb8ca5,#996e88);border-radius:6px;box-shadow:inset 0 1px 6px rgba(60,39,66,.3),0 1px 1px rgba(255,238,245,.75);color:#ffe7f3;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px}
+.cover-time{font-family:Arial,sans-serif;font-size:28px;letter-spacing:.05em;writing-mode:vertical-rl;text-orientation:mixed;font-weight:300}
+.cover-hint{position:absolute;bottom:65px;left:0;width:100%;text-align:center;color:#85415f;font-size:11px;letter-spacing:.1em;animation:pulse 2s infinite}
+.cover-hint span{display:block;margin-bottom:7px;font-size:19px}
+@keyframes pulse{50%{opacity:.45}}
+.hang-charm{position:absolute;left:-38px;top:46px;width:40px;height:123px;z-index:15;pointer-events:none;transition:top 1.85s cubic-bezier(.22,.61,.2,1)}
+.scene.is-open .hang-charm{top:523px}
+.hang-charm:before{content:"";position:absolute;top:0;left:31px;width:22px;height:78px;border-left:2px solid #d5bba1;border-radius:50% 0 0 50%;transform:rotate(11deg)}
+.hang-charm:after{content:"☆";position:absolute;top:73px;left:5px;font-size:37px;color:#f3d5b5;text-shadow:0 1px 2px #bba68c}
+/* screen states */
+.lock-screen{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 16px 5px;text-shadow:0 2px 4px rgba(62,39,72,.36)}
+.lock-date{font-size:12px;letter-spacing:.08em}
+.lock-time{font-family:Arial,sans-serif;font-weight:200;letter-spacing:.02em;font-size:57px;line-height:1.2;margin:6px 0 24px}
+.lock-label{font-size:11px;letter-spacing:.12em;margin-bottom:5px;font-weight:700}
+.lock-input{width:100%;height:38px;border:1px solid rgba(255,255,255,.75);border-radius:5px;background:rgba(52,29,59,.31);box-shadow:0 0 0 1px rgba(76,49,63,.2);color:white;text-align:center;font-size:22px;letter-spacing:.12em;outline:none}
+.lock-input::placeholder{color:#fff;opacity:.75;letter-spacing:.1em}
+.lock-help{margin:8px 0 0;text-align:center;font-size:11px;line-height:1.5;min-height:36px;max-width:224px}
+.home-screen{min-height:100%;padding:18px 10px 10px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-shadow:0 1px 5px rgba(70,40,63,.38)}
+.home-time{font-size:43px;font-weight:200;line-height:1.1;letter-spacing:.01em;margin:2px 0 0}
+.home-date{font-size:11px;margin-top:2px;letter-spacing:.03em}
+.home-owner{font-size:11px;font-weight:bold;letter-spacing:.04em;background:rgba(72,42,63,.28);border-radius:999px;padding:4px 9px;margin-top:9px}
+.shortcuts{display:grid;grid-template-columns:repeat(3,1fr);width:100%;gap:16px 3px;padding:14px 2px 13px;background:linear-gradient(0deg,rgba(43,30,49,.23),rgba(43,30,49,.09));border-radius:9px}
+.app-icon{border:0;background:transparent;color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 1px;min-width:0;text-shadow:0 1px 3px #544055}
+.app-icon .icon-square{display:grid;place-items:center;width:48px;height:48px;border-radius:12px;border:1px solid rgba(255,255,255,.8);box-shadow:0 2px 4px rgba(83,50,76,.26),inset 0 1px 1px #fff;background:linear-gradient(135deg,#fce3e9,#eeb3c6);color:#994e77;font-size:25px;text-shadow:none}
+.app-icon .icon-square svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.app-icon .app-label{display:none}
+.panel-title .heading-icon{display:grid;place-items:center;width:25px;height:25px;flex:none}
+.panel-title .heading-icon svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.app-icon.selected .icon-square{outline:2px solid white;outline-offset:2px}
+.panel{min-height:100%;padding:10px 13px 16px;color:#5c3650;text-shadow:none;background:rgba(255,247,250,.83);border-radius:0}
+.panel-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;margin:5px 0 12px;line-height:1.2}
+.panel-title .heading-icon{font-size:23px}
+.panel-body{font-size:12px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+.panel-card{border:1px solid #edbfd0;border-radius:9px;padding:12px 10px;background:rgba(255,255,255,.64);margin-bottom:9px}
+.panel-caption{font-size:10px;color:#ad6b92;letter-spacing:.07em;margin:0 0 5px;font-weight:bold}
+.panel-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.action{border:1px solid #bc829e;border-radius:7px;background:#e6aac1;color:#713855;font-size:11px;font-weight:bold;padding:9px 11px}
+.action.alt{background:#fff3f7}
+.wallpaper-tip{font-size:11px;line-height:1.6;color:#95647e;margin-top:12px}
+.gallery-thumb{width:100%;height:104px;border-radius:9px;background:linear-gradient(130deg,#ecc4d5,#ddafc7);background-size:cover;background-position:center;display:grid;place-items:center;color:#fff;font-size:30px;text-shadow:0 2px 3px #9c7691}
+/* 底部三個螢幕快捷 App；與實體 I、II、III 一一對應 */
+.screen.unlocked .screen-content{bottom:58px}
+.screen.unlocked .screen-footer{display:none}
+.screen-dock{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:9px;width:168px;height:40px;z-index:5;grid-template-columns:repeat(3,1fr);gap:10px;padding:4px 10px;background:linear-gradient(180deg,rgba(67,44,72,.46),rgba(53,35,58,.38));backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.33);border-radius:999px;box-shadow:0 6px 16px rgba(48,26,49,.22), inset 0 1px 0 rgba(255,255,255,.28)}
+.screen.unlocked .screen-dock{display:grid}
+.dock-app{border:0;background:transparent;color:#fff;display:flex;align-items:center;justify-content:center;min-width:0;padding:0;border-radius:999px}
+.dock-app .dock-graphic{display:grid;place-items:center;width:26px;height:26px;border:1px solid rgba(255,255,255,.88);border-radius:999px;background:linear-gradient(145deg,#fff1f6,#efbfd1);color:#985477;box-shadow:0 3px 8px rgba(54,32,58,.22), inset 0 1px 0 rgba(255,255,255,.95)}
+.dock-app svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.dock-app.selected .dock-graphic{outline:1.5px solid rgba(255,255,255,.92);outline-offset:2px;transform:translateY(-1px)}
+.album-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:9px 0}
+.album-choice{position:relative;min-width:0;border:2px solid #edc4d5;border-radius:9px;background:#fff9fb;padding:4px;text-align:left;color:#7b4a64;box-shadow:0 1px 3px rgba(60,22,40,.09)}
+.album-choice.active{border-color:#ae5681;box-shadow:0 0 0 1px #ae5681}
+.album-choice img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:linear-gradient(140deg,#f2d3e1,#d0a5c6);border-radius:5px}
+.album-choice span{display:block;font-size:10px;text-align:center;padding:4px 0 1px}
+.album-choice .selected-mark{position:absolute;top:7px;right:7px;width:23px;height:23px;border-radius:50%;background:#9e4e78;color:white;display:grid;place-items:center;font-size:14px;font-weight:bold}
+.calendar-head{display:flex;justify-content:space-between;align-items:center;margin:10px 0 8px;font-size:13px;font-weight:bold}
+.calendar-head button{width:30px;height:28px;border:1px solid #d9abc0;border-radius:5px;color:#854761;background:#fff4f8}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.calendar-grid .weekday{text-align:center;font-size:10px;color:#965474;padding:4px 0}
+.calendar-grid button{height:26px;min-width:0;border:0;border-radius:5px;background:rgba(255,255,255,.68);color:#753d60;font-size:10px;padding:0}
+.calendar-grid button.today{outline:1px solid #aa658b}
+.calendar-grid button.picked{background:#b66391;color:white}
+.calendar-grid .blank{min-height:26px}
+.calendar-note{margin-top:11px;font-size:11px;line-height:1.6;color:#7d4a66}
+.under-note{margin-top:14px;max-width:295px;color:#a07087;font-size:11px;text-align:center;line-height:1.7}
+
+/* ===== V14 參考圖外觀微調 ===== */
+body{background:radial-gradient(ellipse at 50% 15%,#fffefe,#f6f2f4 46%,#ebe8ec 100%);color:#7a6a74}
+.lid-shell,.base,.cover{
+  background:linear-gradient(100deg,#d8d0d4 0%,#f1ebee 8%,#ebe2e6 43%,#e5dce1 78%,#cbc0c8 100%);
+  border:1.5px solid #b7aab2;
+  box-shadow:inset 2px 2px 3px rgba(255,255,255,.96),inset -3px -2px 5px rgba(120,109,118,.12),0 10px 20px rgba(81,42,61,.10);
+}
+.lid-shell{padding:17px 14px 12px}
+.speaker{margin:0 auto 13px;background:#433942;border-color:#cdc0c8;box-shadow:inset 0 1px 2px #171316,0 1px 0 #fff}
+.lcd-bezel{width:214px;height:392px;margin:0 auto;padding:4px;background:#17171a;border:1.5px solid #746975;border-radius:8px;box-shadow:0 2px 2px rgba(75,43,52,.18),inset 0 0 0 1px #2c2830}
+.screen{background:#ece7ea;border-radius:3px}
+.status{font-size:10px;padding:2px 8px;color:#f4eef1}
+.brand-name{color:#74616d;text-shadow:0 1px 0 #fff;font-size:16px}
+.circle-utility,.round-pad,.command,.number-key,.speedkey{border-color:#c8bbc3;color:#786672}
+.circle-utility{background:linear-gradient(145deg,#faf6f7,#e7dee3);box-shadow:inset 1px 2px 2px #fff,0 2px 2px rgba(164,145,156,.28)}
+.round-pad{background:linear-gradient(145deg,#faf6f7,#ddd1d8);box-shadow:inset 2px 2px 3px rgba(255,255,255,.95),0 2px 3px rgba(109,66,84,.15)}
+.round-pad .circle-ok{background:radial-gradient(circle at 39% 32%,#9f9099,#7e7079 75%);border-color:#95848d;box-shadow:inset 1px 2px 4px rgba(62,37,56,.23),0 1px 1px #fff}
+.command,.number-key,.speedkey{background:linear-gradient(155deg,#fcf8f9 0%,#efe5e9 66%,#e3d7dd 100%);box-shadow:inset 0 1px 1px #fff,0 1px 2px rgba(120,70,94,.10)}
+.number-key .num,.number-key .kana,.number-key .letters{color:#544651;text-shadow:0 1px 0 #fff}
+.bottom-label{color:#9a8a95}
+.cover::before{content:"";position:absolute;inset:27px 12px 17px;border:1px solid rgba(255,255,255,.55);border-radius:22px 22px 30px 30px;pointer-events:none}
+.cover-title{top:auto;bottom:42px;left:0;width:100%;font-family:Georgia,serif;text-align:center;font-size:16px;color:#8b7a84;letter-spacing:-.01em}
+.cover-gloss{background:linear-gradient(115deg,transparent 16%,rgba(255,255,255,.16) 24%,transparent 44%)}
+.cover-display{position:absolute;left:50%;top:240px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;width:160px;min-height:54px;padding:8px 10px 7px;border-radius:14px;color:#faf8f9;background:rgba(142,132,138,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.23);backdrop-filter:blur(2px)}
+.cover-time{font:700 20px/1 "Courier New",ui-monospace,monospace;letter-spacing:.08em;text-shadow:0 0 0 #fff,1px 0 0 rgba(255,255,255,.72),0 1px 0 rgba(255,255,255,.72)}
+.cover-marquee{width:100%;overflow:hidden;white-space:nowrap;margin-top:4px;font:700 11px/1 "Courier New",ui-monospace,monospace;letter-spacing:.08em;text-shadow:1px 0 0 rgba(255,255,255,.65),0 1px 0 rgba(255,255,255,.65)}
+.cover-marquee span{display:inline-block;padding-left:100%;animation:coverMarquee 8s linear infinite}
+@keyframes coverMarquee{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+.cover-hint{bottom:70px;padding:7px 12px;font-size:11px;background:rgba(255,255,255,.45);color:#7f7078;box-shadow:0 4px 10px rgba(66,56,64,.10)}
+.home-screen{position:relative;min-height:100%;padding:10px 12px 60px;display:flex;flex-direction:column}
+.home-search{display:flex;align-items:center;gap:8px;width:100%;height:34px;padding:0 12px;border-radius:999px;background:rgba(250,246,248,.72);border:1px solid rgba(255,255,255,.52);box-shadow:0 5px 18px rgba(64,49,63,.10);backdrop-filter:blur(5px)}
+.search-icon-btn{width:22px;height:22px;border:0;background:transparent;padding:0;display:grid;place-items:center;flex:none;color:#7e7580}
+.search-icon-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.search-icon-media{width:18px;height:18px;border-radius:6px;object-fit:cover;display:block;filter:drop-shadow(0 1px 2px rgba(57,36,53,.18))}
+.search-placeholder{font-size:11px;color:#7b727b;opacity:.92;letter-spacing:.02em}
+.home-center{flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-left:10px;color:#fff;text-shadow:0 2px 10px rgba(54,35,49,.25)}
+.home-time{font-size:56px;line-height:.92;font-weight:700;letter-spacing:-.06em;margin-bottom:5px}
+.home-date{font-size:13px;opacity:.95;letter-spacing:.05em}
+.home-owner{display:none}
+.home-small-note{margin-top:7px;font-size:10px;opacity:.9;background:rgba(255,255,255,.18);padding:4px 8px;border-radius:999px;backdrop-filter:blur(3px)}
+.screen.unlocked .screen-content{bottom:54px}
+.screen.unlocked .screen-footer{display:none}
+.screen-dock{display:none;position:absolute;left:50%;transform:translateX(-50%);bottom:10px;width:auto;height:auto;z-index:5;grid-template-columns:repeat(5,1fr);gap:14px;padding:0;background:none;border:0;box-shadow:none;backdrop-filter:none}
+.screen.unlocked .screen-dock{display:grid}
+.dock-app{border:0;background:transparent;color:#fff;display:flex;align-items:center;justify-content:center;min-width:0;padding:0}
+.dock-app .dock-graphic{display:grid;place-items:center;width:auto;height:auto;border:0;background:none;color:#fff;box-shadow:none;filter:drop-shadow(0 3px 7px rgba(34,20,30,.28))}
+.dock-app svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.dock-app.selected .dock-graphic{outline:none;transform:translateY(-2px) scale(1.08);filter:drop-shadow(0 0 8px rgba(255,255,255,.7)) drop-shadow(0 3px 8px rgba(34,20,30,.28))}
+.panel{padding-bottom:14px}
+.guide-list{margin:0;padding-left:17px;font-size:12px;line-height:1.7;color:#714d63}
+.guide-tool{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.wallpaper-tip{font-size:11px;line-height:1.6;color:#7d4a66}
+
+
+/* ===== V15: 時間置中／統一銀粉色轉軸／放大五顆 App／完整內容頁 ===== */
+.cover-display{
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:198px;height:auto;min-height:0;gap:9px;padding:0;
+  background:transparent;border:0;border-radius:0;
+  box-shadow:none;backdrop-filter:none;
+}
+.cover-time{
+  display:block;writing-mode:horizontal-tb;text-orientation:mixed;
+  width:100%;text-align:center;
+  font-family:"Courier New",monospace;font-size:23px;font-weight:700;
+  line-height:1.05;letter-spacing:.1em;color:#fffafc;
+  text-shadow:1px 0 rgba(255,255,255,.58),0 1px rgba(255,255,255,.48),0 0 5px rgba(114,100,112,.35);
+}
+.cover-marquee{
+  width:100%;margin:0;overflow:hidden;
+  color:#8b7785;font:700 11px/1.15 "Courier New",monospace;
+  letter-spacing:.02em;text-shadow:1px 0 rgba(255,255,255,.42),0 1px rgba(255,255,255,.42);
+}
+.cover-marquee span{padding-left:0;}
+.cover-title{display:none}
+/* 機身上下銜接處統一淡銀粉色，不更動轉軸幾何位置與翻蓋動畫。 */
+.hinge::before,.hinge::after{
+  border:1px solid #b5a8b1;
+  background:linear-gradient(180deg,#d0c5cd 0%,#f3ebee 19%,#d7cbd3 50%,#f8f1f4 82%,#bcb0b9 100%);
+  box-shadow:inset 0 2px 2px rgba(255,255,255,.88),0 1px 2px rgba(99,84,93,.12);
+}
+.hinge span{
+  border:1px solid #aea0aa;
+  background:linear-gradient(180deg,#c2b5be 0%,#faf2f5 19%,#ddd0d8 52%,#f0e7ed 78%,#afa0ac 100%);
+  box-shadow:inset 0 1px 3px rgba(255,255,255,.94),0 1px 2px rgba(81,67,77,.1);
+}
+/* 主畫面：五顆更清楚的去背懸浮圖示。 */
+.screen-dock{
+  bottom:7px;grid-template-columns:repeat(5,35px);
+  gap:4px;padding:3px 2px;justify-content:center;
+}
+.dock-app{width:35px;height:41px;min-width:35px;min-height:41px}
+.dock-app .dock-graphic{
+  width:35px;height:37px;color:#fff;display:grid;place-items:center;
+  background:transparent;border:0;box-shadow:none;
+  filter:drop-shadow(0 1px 1px rgba(44,30,45,.6)) drop-shadow(0 3px 6px rgba(33,24,39,.32));
+}
+.dock-app svg{width:31px;height:31px;stroke-width:1.95}
+.dock-app.selected .dock-graphic{
+  outline:none;transform:translateY(-2px) scale(1.04);
+  filter:drop-shadow(0 0 4px rgba(255,255,255,.75)) drop-shadow(0 3px 6px rgba(44,30,45,.5));
+}
+.screen.unlocked:not(.app-view) .screen-content{bottom:55px}
+/* 開啟任何 App、含メニュー說明時：內容填滿螢幕底部，不疊快捷列。 */
+.screen.unlocked.app-view .screen-content{bottom:0}
+.screen.unlocked.app-view .screen-dock{display:none}
+.screen-content{
+  overflow-y:auto;overflow-x:hidden;touch-action:pan-y;
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+}
+.screen.unlocked.app-view .panel{min-height:100%;padding-bottom:24px}
+
+
+/* V16 — keyboard navigation, physical-key search, curated icons, safe charm layer */
+.hang-charm{left:-32px;top:191px;z-index:5;transition:top 1.85s cubic-bezier(.22,.61,.2,1)}
+.scene.is-open .hang-charm{top:668px}
+/* 機身之外的星星掛飾位於手機背後，不再穿過翻蓋接縫 */
+.hang-charm::before{left:25px}
+.hang-charm::after{left:0;top:73px;filter:drop-shadow(0 2px 2px rgba(91,66,80,.25))}
+.home-search{min-width:0;gap:5px;padding:0 8px}
+.search-field{min-width:0;width:100%;flex:1;border:0;outline:0;box-shadow:none;background:transparent;color:#514656;font-size:12px;letter-spacing:.04em;padding:5px 1px;caret-color:#7a536c}
+.search-field::placeholder{color:#817684;opacity:.86}
+.search-accept{flex:none;width:20px;height:24px;display:grid;place-items:center;border:0;background:transparent;padding:0;color:#71616f;font-size:17px;font-weight:700}
+.search-icon-btn{height:26px;width:26px;overflow:hidden;border-radius:7px}
+.search-icon-media{width:22px;height:22px;object-fit:contain;border-radius:4px}
+.search-status{position:absolute;top:48px;left:12px;right:12px;min-height:18px;border-radius:5px;font-size:10px;color:#fff;line-height:1.4;text-shadow:0 1px 3px rgba(49,26,39,.7);text-align:center;pointer-events:none}
+.search-icon-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
+.search-icon-choice{min-width:0;border:1px solid #d7bcca;border-radius:9px;background:#fff6f9;padding:9px 3px;min-height:84px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;font-size:10px;color:#7b4a64}
+.search-icon-choice img{height:42px;width:42px;object-fit:contain}
+.search-icon-choice.active{outline:2px solid #af6f95;outline-offset:0;background:#ffe9f0}
+/* 程式控制的實體方向鍵選取框 */
+.screen .nav-chosen{outline:2px solid #fff !important;outline-offset:2px;box-shadow:0 0 0 4px rgba(151,91,133,.42),0 0 12px rgba(255,255,255,.4);border-radius:7px}
+.screen .dock-app.nav-chosen{outline:2px solid #fff !important;outline-offset:3px;box-shadow:none;border-radius:12px}
+.screen .search-field.nav-chosen{outline:1.5px solid #ce98b5 !important;outline-offset:0;box-shadow:none;border-radius:4px}
+.screen .search-icon-btn.nav-chosen{border-radius:8px}
+.screen-content{scroll-behavior:smooth}
+
+
+/* ===== V17：主人自訂搜尋圖示＋多分類相簿 ===== */
+.search-icon-static{height:26px;width:26px;display:grid;place-items:center;flex:none;pointer-events:none}
+.search-icon-static .search-icon-media{width:23px;height:23px;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(45,27,40,.18))}
+.album-intro{font-size:10px;letter-spacing:.12em;color:#9a627d;margin:2px 0 12px;font-weight:700}
+.album-category-list{display:flex;flex-direction:column;gap:10px}
+.album-category{display:flex;align-items:center;gap:10px;width:100%;min-height:81px;text-align:left;padding:6px 9px 6px 6px;border:1px solid #e4c7d4;border-radius:12px;background:rgba(255,255,255,.82);box-shadow:0 3px 9px rgba(102,67,89,.09);color:#764d65}
+.album-cover{width:64px;height:67px;object-fit:cover;border-radius:8px;background:#f2d4e0;flex:none}
+.album-category-info{display:flex;min-width:0;flex:1;flex-direction:column;gap:5px}
+.album-category-info strong{font-size:12px;line-height:1.2}
+.album-category-info small{font-size:10px;line-height:1.3;color:#99738a}
+.album-category-info em{font-style:normal;font-size:9px;letter-spacing:.1em;color:#bd89a4}
+.album-chevron{font-size:24px;color:#b07894}
+.album-subtitle{font-size:11px;color:#856178;line-height:1.5;margin:-2px 0 13px}
+.album-photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.album-photo-tile{min-width:0;display:flex;flex-direction:column;gap:5px;padding:5px 5px 8px;border:1px solid #e3c6d3;border-radius:10px;background:#fff8fb;color:#735369;text-align:center;box-shadow:0 2px 7px rgba(100,64,87,.09)}
+.album-thumb{width:100%;aspect-ratio:1 / 1;object-fit:cover;border-radius:6px;background:#e9d8e5}
+.album-photo-name{font-size:11px;line-height:1.35;min-height:16px;overflow-wrap:anywhere}
+.photo-breadcrumb{font-size:9px;font-weight:700;letter-spacing:.09em;color:#ab7d98;margin:0 0 9px}
+.photo-large-stage{padding:7px;background:rgba(255,255,255,.85);border-radius:10px;border:1px solid #ead5df;box-shadow:0 3px 11px rgba(100,67,83,.11)}
+.photo-large{display:block;width:100%;max-height:none;aspect-ratio:3 / 4;object-fit:contain;border-radius:5px;background:#e8dae6}
+.photo-detail-title{font-size:16px;font-weight:700;color:#5e4056;margin:15px 0 2px}
+.photo-date{font-size:10px;color:#aa7e95;letter-spacing:.08em;margin:2px 0 12px}
+.photo-description{font-size:12px;color:#664c5d;line-height:1.95;white-space:pre-line;overflow-wrap:anywhere;padding:12px 0 10px;border-top:1px solid #ead4de;min-height:64px}
+.photo-actions{margin:15px 0 6px;display:flex;flex-direction:column;gap:6px}
+.photo-wallpaper-btn{display:block;width:100%;min-height:42px;padding:9px 12px;border:1px solid #a97793;border-radius:10px;color:white;font-size:12px;font-weight:700;letter-spacing:.04em;background:linear-gradient(115deg,#bf8da7,#9d6889);box-shadow:0 3px 8px rgba(117,74,102,.23)}
+.photo-wallpaper-btn:active{filter:brightness(.94)}
+
+
+/* V18：修正 3D 翻蓋場景中實際手機手指滑動不生效的問題 */
+.screen.unlocked.app-view .screen-content{
+  touch-action:none;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:auto;
+  scroll-behavior:auto;
+}
+
+@media (prefers-reduced-motion: reduce){.scene,.flip,.base,.hinge,.hang-charm{transition-duration:.01ms!important;transition-delay:0ms!important}.cover-hint,.cover-marquee span{animation:none}}
+</style>
 </head>
 <body>
-  <main>
-    <div class="wrap">
-      <div class="page-tag">Y2K CHARACTER PHONE</div>
-      <h1 class="headline">
-        <strong id="siteTitle">LUNA'S PHONE</strong>
-        <span id="siteSubtitle">輸入暗號後，直接在手機螢幕裡解鎖內容</span>
-      </h1>
-
-      <div class="phone" aria-label="Y2K 風格翻蓋手機互動網站">
-        <section class="top-shell" aria-label="手機上蓋與螢幕">
-          <div class="decor flower" aria-hidden="true">🌼</div>
-          <div class="decor badge" aria-hidden="true">BFF</div>
-          <div class="decor rainbow" aria-hidden="true">🌈</div>
-          <div class="decor icons" aria-hidden="true"><span>🍓</span><span>☮</span></div>
-          <div class="cam-bar" aria-hidden="true"></div>
-
-          <div class="screen-frame">
-            <div class="brand" id="phoneBrand">LUNA</div>
-            <div class="lcd">
-              <div class="status">
-                <span>TW <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
-                <span id="clockSmall">00:00</span>
-              </div>
-
-              <div class="view" id="screenView" aria-live="polite">
-                <div id="lockView">
-                  <div class="clock-large" id="clockLarge">00:00</div>
-                  <div class="date-line" id="dateLine">2004 / 04 / 20</div>
-                  <div class="tiny-heart" aria-hidden="true">♥</div>
-                  <div class="owner-line" id="ownerLine">OWNER : LUNA</div>
-                  <div class="unlock-label">ENTER CODE</div>
-                  <div class="display empty" id="display">_ _ _ _</div>
-                  <div class="small-note" id="hint">按下方手機鍵盤輸入暗號，再按 OK 解鎖</div>
-                </div>
-              </div>
-
-              <div class="softkeys">
-                <button type="button" id="screenBack">BACK</button>
-                <span id="modeLabel">MODE : 123</span>
-                <button type="button" id="screenHome">HOME</button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div class="hinge" aria-hidden="true"></div>
-
-        <section class="bottom-shell" aria-label="手機按鍵">
-          <div class="brand-row">✦ STARLINE / Y2K EDITION ✦</div>
-
-          <div class="nav-pad" aria-hidden="true">
-            <div class="utility-row">
-              <button class="u-btn" type="button">☁</button>
-              <button class="u-btn" type="button">✉</button>
-              <button class="u-btn" type="button">♫</button>
-              <button class="u-btn" type="button">☾</button>
-            </div>
-            <div class="center-pad">
-              <button class="nav up" type="button">△</button>
-              <button class="nav left" type="button">◁</button>
-              <button class="ok-btn" id="okCenter" type="button">OK</button>
-              <button class="nav right" type="button">▷</button>
-              <button class="nav down" type="button">▽</button>
-            </div>
-          </div>
-
-          <div class="control-strip">
-            <button class="strip-btn" id="toggle" type="button">ABC / 123</button>
-            <button class="strip-btn" id="delete" type="button">⌫ CLEAR</button>
-            <button class="strip-btn confirm" id="unlock" type="button">UNLOCK</button>
-          </div>
-
-          <div class="keypad" aria-label="數字鍵盤">
-            <button class="key" type="button" data-key="1"><span class="num">1</span><span class="letters">&nbsp;</span></button>
-            <button class="key" type="button" data-key="2"><span class="num">2</span><span class="letters">ABC</span></button>
-            <button class="key" type="button" data-key="3"><span class="num">3</span><span class="letters">DEF</span></button>
-            <button class="key" type="button" data-key="4"><span class="num">4</span><span class="letters">GHI</span></button>
-            <button class="key" type="button" data-key="5"><span class="num">5</span><span class="letters">JKL</span></button>
-            <button class="key" type="button" data-key="6"><span class="num">6</span><span class="letters">MNO</span></button>
-            <button class="key" type="button" data-key="7"><span class="num">7</span><span class="letters">PQRS</span></button>
-            <button class="key" type="button" data-key="8"><span class="num">8</span><span class="letters">TUV</span></button>
-            <button class="key" type="button" data-key="9"><span class="num">9</span><span class="letters">WXYZ</span></button>
-            <button class="key" type="button" data-key="*"><span class="num">*</span><span class="letters">&nbsp;</span></button>
-            <button class="key" type="button" data-key="0"><span class="num">0</span><span class="letters">SPACE</span></button>
-            <button class="key" type="button" data-key="#"><span class="num">#</span><span class="letters">&nbsp;</span></button>
-          </div>
-        </section>
-
-        <div class="charm" aria-hidden="true">
-          <div class="loop"></div>
-          <div class="beads">
-            <span>⭐</span>
-            <span>💗</span>
-            <span>🧸</span>
-            <span>🦋</span>
-            <span>🌼</span>
-          </div>
-        </div>
-      </div>
-
-      <p class="owner-note">示範暗號：<strong>1234</strong>、<strong>STAR</strong><br>輸入後會直接在手機螢幕內開啟內容，不會跳到新頁面。</p>
+<main>
+ <div id="scene" class="scene" aria-label="kazami★彡 粉色翻蓋手機">
+  <div class="flip" id="flip">
+  <section class="lid" id="lid" aria-label="手機內側螢幕">
+   <div class="lid-shell">
+    <div class="speaker" aria-hidden="true"></div>
+    <div class="lcd-bezel">
+     <div class="screen" id="screen">
+      <div class="screen-wallpaper" id="screenWallpaper"></div>
+      <div class="default-decor" aria-hidden="true"></div>
+      <div class="status"><span class="signal">JP ▂▄▆</span><span id="statusTime">12:34　▰</span></div>
+      <div class="screen-content" id="screenContent" aria-live="polite"></div>
+      <div class="screen-footer"><button class="soft-button" id="softLeft" type="button">戻る</button><span id="modeText">123</span><button class="soft-button" id="softRight" type="button">閉じる</button></div>
+      <div class="screen-dock" id="screenDock" aria-label="主畫面快捷 App：通訊錄、備忘錄、訊息、相簿、日曆"></div>
+     </div>
     </div>
-  </main>
+    <div class="lid-camera" aria-hidden="true"></div>
+   </div>
+  </section>
+    <button class="cover" id="cover" type="button" aria-label="點擊合蓋手機的外螢幕，翻開手機">
+   <span class="cover-gloss" aria-hidden="true"></span>
+   <span class="cover-display">
+    <span id="outerTime" class="cover-time">12:34</span>
+    <span class="cover-marquee"><span id="outerMarqueeText">WELCOME HOME ★ MAKE A WISH ★</span></span>
+   </span>
+   <span class="cover-hint"><span>✦</span>點擊外螢幕，翻開手機</span>
+  </button>
+  </div>
+  <div class="hinge" aria-hidden="true"><span></span></div>
+  <section class="base" id="base" aria-label="手機按鍵區">
+   <div class="brand-name"><b>kazami★彡</b></div>
+   <div class="control-area">
+    <div class="side-controls">
+     <button class="circle-utility" id="menuBtn" type="button" aria-label="選單／主畫面"><span class="mini-jp">メニュー</span></button>
+     <button class="circle-utility" id="messageBtn" type="button" aria-label="日記"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></button>
+    </div>
+    <div class="round-pad" aria-label="圓形方向鍵">
+     <button class="arrow-up" id="upBtn" type="button" aria-label="向上捲動／上一個選項">▴</button>
+     <button class="arrow-left" id="leftBtn" type="button" aria-label="向左／返回">‹</button>
+     <button class="circle-ok" id="okBtn" type="button" aria-label="中央圓形確認鍵：解鎖或開啟快捷圖示">OK</button>
+     <button class="arrow-right" id="rightBtn" type="button" aria-label="下一個快捷圖示">›</button>
+     <button class="arrow-down" id="downBtn" type="button" aria-label="向下捲動／下一個選項">▾</button>
+    </div>
+    <div class="side-controls">
+     <button class="circle-utility" id="photoBtn" type="button" aria-label="相簿"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M8 4V2m8 2V2"/></svg><span class="mini-jp">TV</span></button>
+     <button class="circle-utility" id="modeBtn" type="button" aria-label="切換數字英文日文輸入">あ/Ａ</button>
+    </div>
+   </div>
+   <div class="command-row">
+    <button class="command" id="callBtn" type="button" aria-label="綠色電話／主畫面"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3 3 6c1 9 6 14 15 15l3-3-6-4-3 3c-3-1-4-3-5-5l2-3-4-6z"/></svg></button>
+    <button class="command" id="clearBtn" type="button" aria-label="クリア／刪除、返回">クリア<small>メモ</small></button>
+    <button class="command" id="powerBtn" type="button" aria-label="結束／鎖定"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13c4-5 14-5 18 0l-3 4-4-2h-4l-4 2z"/></svg><small>⏻</small></button>
+   </div>
+   <div class="keypad" aria-label="日文手機鍵盤">
+    <button class="number-key" data-key="1" type="button"><span class="num">1</span><span class="key-sub"><span class="kana">あ</span><span class="letters">@</span></span></button>
+    <button class="number-key" data-key="2" type="button"><span class="num">2</span><span class="key-sub"><span class="kana">か</span><span class="letters">ABC</span></span></button>
+    <button class="number-key" data-key="3" type="button"><span class="num">3</span><span class="key-sub"><span class="kana">さ</span><span class="letters">DEF</span></span></button>
+    <button class="number-key" data-key="4" type="button"><span class="num">4</span><span class="key-sub"><span class="kana">た</span><span class="letters">GHI</span></span></button>
+    <button class="number-key" data-key="5" type="button"><span class="num">5</span><span class="key-sub"><span class="kana">な</span><span class="letters">JKL</span></span></button>
+    <button class="number-key" data-key="6" type="button"><span class="num">6</span><span class="key-sub"><span class="kana">は</span><span class="letters">MNO</span></span></button>
+    <button class="number-key" data-key="7" type="button"><span class="num">7</span><span class="key-sub"><span class="kana">ま</span><span class="letters">PQRS</span></span></button>
+    <button class="number-key" data-key="8" type="button"><span class="num">8</span><span class="key-sub"><span class="kana">や</span><span class="letters">TUV</span></span></button>
+    <button class="number-key" data-key="9" type="button"><span class="num">9</span><span class="key-sub"><span class="kana">ら</span><span class="letters">WXYZ</span></span></button>
+    <button class="number-key" data-key="*" type="button"><span class="num">＊</span><span class="key-sub"><span class="kana">小文字</span><span class="letters">＋</span></span></button>
+    <button class="number-key" data-key="0" type="button"><span class="num">0</span><span class="key-sub"><span class="kana">わ</span><span class="letters">ー゜</span></span></button>
+    <button class="number-key" data-key="#" type="button"><span class="num">＃</span><span class="key-sub"><span class="kana">↵</span><span class="letters">記号</span></span></button>
+   </div>
+   <div class="speedrow"><button class="speedkey" data-speed="contacts" type="button" aria-label="快捷鍵 I 通訊錄">I</button><button class="speedkey" data-speed="messages" type="button" aria-label="快捷鍵 II 訊息">II</button><button class="speedkey" data-speed="photos" type="button" aria-label="快捷鍵 III 相簿">III</button></div>
+   <div class="bottom-label"><span>SH-01J</span><span>Bluetooth ◉</span></div><div class="mic"></div>
+  </section>
+  <div class="hang-charm" aria-hidden="true"></div>
+ </div>
+ <p class="under-note" id="underNote">點擊合蓋手機的外螢幕，翻開這支手機 ✧</p>
+</main>
+<script>
+'use strict';
+/* ===== 角色手機內容：你可以改這裡 ===== */
+const PASSWORD = '1234';
+const OWNER_NAME = 'kazami★彡';
+const CONTACTS_TEXT = '名字：Kazami\n這支粉色翻蓋手機的主人。\n\n在這裡填入角色名字、生日、電話簿與關係設定。';
+const MEMO_TEXT = '2005 / 07 / 05\n\n今天也帶著這支手機出門。\n\n這裡可以換成角色的備忘錄或私人紀錄。';
+const MESSAGE_TEXT = '✉ 收件匣\n\n1. 晚上記得回電話喔。\n2. 約定的事情，別忘了。\n\n這裡可以改成角色收到的訊息。';
+// ★ 搜尋欄左側圖示：只有你修改網站檔案後才會更換。
+// 把你的 GIF、PNG 或 WebP 放進 search-icons 資料夾，並修改以下檔名。
+// 訪客看不到更換圖示的按鈕，也不能上傳或選擇圖示。
+const SEARCH_ICON_FILE = 'search-icons/owner-icon.gif';
 
-  <script>
-    // =========================
-    // 你之後只要改下面這幾塊就可以
-    // =========================
+// ★ 相簿分類與照片：在這裡修改分類、照片檔名、標題和介紹文字。
+// 想新增分類，就複製一整組 { id: ... }；同一分類新增照片，就複製 photos 裡的一組。
+// 一張照片會有：縮圖 → 大圖＋說明 → 設為桌布。訪客不能修改這些文字或檔案。
+const ALBUMS = [
+  {
+    id: 'daily',
+    title: '日常碎片',
+    subtitle: '普通日子裡的小小收藏',
+    photos: [
+      { file: 'albums/daily/01.jpg', title: '午後的光', date: '2005.07.05', description: '午後的陽光落在窗邊。\n\n這裡可以寫下這張照片背後的角色故事、地點或回憶。' },
+      { file: 'albums/daily/02.jpg', title: '小小心願', date: '2005.07.08', description: '今天把心願偷偷記在手機裡。\n\n你可以自由把這段改成自己的故事文字。' }
+    ]
+  },
+  {
+    id: 'memories',
+    title: '私藏回憶',
+    subtitle: '不想忘記的片刻',
+    photos: [
+      { file: 'albums/memories/01.jpg', title: '紫色夢境', date: '2005.08.14', description: '那天的天空像一場很久以前的夢。\n\n把你想展示的設定、故事或照片說明填在這裡。' },
+      { file: 'albums/memories/02.jpg', title: '一封未寄出的信', date: '2005.08.21', description: '還有一些話，暫時只留在相簿裡。' }
+    ]
+  },
+  {
+    id: 'travel',
+    title: '沿途風景',
+    subtitle: '一起走過的地方',
+    photos: [
+      { file: 'albums/travel/01.jpg', title: '藍色的約定', date: '2005.09.02', description: '出發前，在手帳上畫了一個小小的星號。' },
+      { file: 'albums/travel/02.jpg', title: '晚風與星星', date: '2005.09.10', description: '夜晚的街燈很亮，但還是看得到星星。\n\n所有訪客都可以閱讀這段介紹並把照片設成桌布。' }
+    ]
+  }
+];
 
-    // 1) 手機主人 / 網站標題
-    const PHONE_OWNER = 'むむ';
-    const SITE_TITLE = "むむの携帯";
-    const SITE_SUBTITLE = '輸入暗號後，直接在手機螢幕裡解鎖內容';
+// 輸入搜尋暗號後按中央圓鍵，可以進入對應的手機內隱藏頁。
+// 左側是暗號，右側是要顯示的標題和內容。這是故事內容，並非真正的保密系統。
+const HIDDEN_PAGES = {
+ 'STAR': {title:'星光日記',body:'✦ 2005.07.05\n\n這是只有輸入 STAR 才會出現的隱藏日記。\n你可以把這裡改成角色的回憶或秘密設定。'},
+ 'さくら': {title:'桜の記憶',body:'春天的櫻花落下時，手機裡留下了這段回憶。\n\n這裡可以放日文角色設定。'},
+ '777': {title:'秘密相簿',body:'這是一個示範隱藏頁。\n你可以自行替換成任何故事文字。'}
+};
+/* ===== 以下通常不用修改 ===== */
+const APP_LIST = [
+ {id:'contacts', label:'通訊錄', icon:'contacts'},
+ {id:'memo', label:'備忘錄', icon:'memo'},
+ {id:'messages', label:'訊息', icon:'messages'},
+ {id:'photos', label:'相簿', icon:'photos'},
+ {id:'calendar', label:'日曆', icon:'calendar'}
+];
+const DOCK = APP_LIST;
+const DRAW = {
+  contacts:'<rect x="5" y="3" width="15" height="18" rx="2"/><path d="M5 7H3m2 5H3m2 5H3"/><circle cx="12.5" cy="9" r="2"/><path d="M8.7 16c.7-2.4 6.9-2.4 7.6 0"/>',
+  memo:'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2m6 2V2M8 9h8M8 13h8M8 17h5"/>',
+  messages:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
+  photos:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.6"/><path d="m4 18 5.5-5.5 3.2 3.2 3.1-3.5 4.2 5.2"/>',
+  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4m8-4v4M3 10h18M8 14h3m3 0h3m-9 4h3"/>',
+  settings:'<path d="m10.1 2.4 3.8 0 .6 2.2 2 1.1 2.2-.7 1.9 3.3-1.6 1.7v2.3l1.6 1.7-1.9 3.3-2.2-.7-2 1.1-.6 2.2h-3.8l-.6-2.2-2-1.1-2.2.7-1.9-3.3 1.6-1.7V10l-1.6-1.7 1.9-3.3 2.2.7 2-1.1z" transform="translate(0 1) scale(.92)"/><circle cx="12" cy="12" r="3"/>',
+};
+const modes=['123','ABC','あ','ア'];
+const latin={2:'ABC',3:'DEF',4:'GHI',5:'JKL',6:'MNO',7:'PQRS',8:'TUV',9:'WXYZ'};
+const kana={1:'あいうえおぁぃぅぇぉ',2:'かきくけこ',3:'さしすせそ',4:'たちつてとっ',5:'なにぬねの',6:'はひふへほ',7:'まみむめも',8:'やゆよゃゅょ',9:'らりるれろ',0:'わをんー'};
+const STORE_KEY='kazami-photo-wallpaper-v17';
+const OUTER_MARQUEE='WELCOME HOME ★ MAKE A WISH ★ HAVE A NICE DAY ★';
+const $=id=>document.getElementById(id);
+const scene=$('scene'),content=$('screenContent'),screen=$('screen');
+const state={open:false,unlocked:false,app:'lock',code:'',mode:0,lastKey:'',lastAt:0,letterIndex:0,selected:0,wallpaperFile:ALBUMS[0].photos[0].file,activeAlbum:null,activePhoto:null,month:new Date().getMonth(),year:new Date().getFullYear(),pickedDay:new Date().getDate(),searchQuery:'',searchMode:'idle',searchLastKey:'',searchLastAt:0,searchLetterIndex:0,navElement:null};
+function el(tag,cls,text){const item=document.createElement(tag);if(cls)item.className=cls;if(text!==undefined)item.textContent=text;return item}
+function graphic(name,classname=''){const holder=el('span',classname);holder.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">'+DRAW[name]+'</svg>';return holder}
+function clock(){return new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit',hour12:false})}
+function date(){return new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'})}
+function updateClocks(){let time=clock();$('outerTime').textContent=time;$('statusTime').textContent=time+'　▰';$('outerMarqueeText').textContent=OUTER_MARQUEE;const a=content.querySelector('[data-clock]');if(a)a.textContent=time;const b=content.querySelector('[data-date]');if(b)b.textContent=date()}
+function footer(left,mid,right){$('softLeft').textContent=left;$('modeText').textContent=mid;$('softRight').textContent=right}
+function note(t){$('underNote').textContent=t}
+function setScreen(){screen.classList.toggle('unlocked',state.unlocked);screen.classList.toggle('app-view',state.unlocked&&state.app!=='home')}
+function renderDock(){const dock=$('screenDock');dock.replaceChildren();for(const option of DOCK){const b=el('button','dock-app');b.type='button';b.title=option.label;b.setAttribute('aria-label','開啟'+option.label);b.dataset.app=option.id;b.append(graphic(option.icon,'dock-graphic'));b.addEventListener('click',()=>openApp(option.id));dock.append(b)}}
+function renderLock(message){state.app='lock';setScreen();content.replaceChildren();const page=el('div','lock-screen');const d=el('div','lock-date',date());d.dataset.date='';const t=el('div','lock-time',clock());t.dataset.clock='';const lbl=el('div','lock-label','ENTER PASSWORD');const input=el('input','lock-input');input.id='passwordInput';input.type='text';input.lang='ja';input.placeholder='PIN / 暗號';input.maxLength=28;input.autocomplete='off';input.autocorrect='off';input.spellcheck=false;input.value=state.code;input.setAttribute('aria-label','密碼輸入框，支援日文輸入法');input.addEventListener('input',()=>{state.code=input.value.slice(0,28);state.lastKey=''});input.addEventListener('compositionend',()=>{state.code=input.value});const help=el('div','lock-help',message||'按數字鍵輸入密碼，再按中央圓形按鈕解鎖');help.id='lockHelp';page.append(d,t,lbl,input,help);content.append(page);footer('清除',modes[state.mode],'關蓋');note('示範解鎖密碼：1234　｜　中央圓形鍵確認')}
+function syncCode(message){if(state.app!=='lock')return;const input=$('passwordInput');if(input)input.value=state.code;if(message)$('lockHelp').textContent=message}
+function renderHome(){state.app='home';state.searchMode='idle';state.searchLastKey='';setScreen();content.replaceChildren();const page=el('div','home-screen');const search=el('div','home-search');const iconBtn=el('span','search-icon-static');iconBtn.title='手機主人設定的搜尋圖示';iconBtn.append(makeSearchIconNode());const input=el('input','search-field');input.id='searchInput';input.type='text';input.readOnly=true;input.lang='ja';input.maxLength=36;input.autocomplete='off';input.autocorrect='off';input.spellcheck=false;input.value=state.searchQuery;input.placeholder='Search · 點一下按鍵輸入';input.setAttribute('aria-label','搜尋暗號。點一下用手機按鍵，第二下改用真實鍵盤');input.addEventListener('click',activateSearchInput);input.addEventListener('input',()=>{state.searchQuery=input.value.slice(0,36);state.searchLastKey='';showSearchStatus('按圓形確認鍵進入暗號頁面')});input.addEventListener('compositionend',()=>{state.searchQuery=input.value.slice(0,36)});const accept=el('button','search-accept','↵');accept.type='button';accept.title='確認搜尋暗號';accept.setAttribute('aria-label','確認搜尋暗號');accept.addEventListener('click',submitSearch);search.append(iconBtn,input,accept);const feedback=el('div','search-status');feedback.id='searchStatus';const center=el('div','home-center');const time=el('div','home-time',clock());time.dataset.clock='';const d=el('div','home-date',date());d.dataset.date='';center.append(time,d);page.append(search,feedback,center);content.append(page);renderDock();footer('返回','HOME','關蓋');note('搜尋欄第一下：手機按鍵；第二下：真正鍵盤。輸入暗號後按中央圓鍵。');selectNav($('screenDock').querySelector('.dock-app'))}
+function panel(title,iconName,onBack=renderHome){setScreen();content.replaceChildren();content.scrollTop=0;const page=el('div','panel');const h=el('div','panel-title');const backButton=el('button','panel-back','‹');backButton.type='button';backButton.setAttribute('aria-label','返回主畫面');backButton.style.cssText='border:0;background:transparent;color:#8c4a6d;font-size:26px;line-height:1;padding:0 5px 0 0';backButton.addEventListener('click',onBack);h.append(backButton,graphic(iconName,'heading-icon'),el('span','',title));page.append(h);content.append(page);renderDock();return page}
+function addCard(parent,label,text){const box=el('div','panel-card');box.append(el('p','panel-caption',label),el('div','panel-body',text));parent.append(box);return box}
+function addAction(parent,name,callback,secondary=false){const b=el('button','action'+(secondary?' alt':''),name);b.type='button';b.addEventListener('click',callback);parent.append(b);return b}
 
-    // 2) 暗號對應內容
-    // 左邊 key 是暗號，右邊是手機螢幕解鎖後要顯示的內容
-    const phoneContents = {
-      '1234': {
-        label: 'PROFILE',
-        title: '角色基本設定',
-        emoji: '✦',
-        body: '名字：Luna\n身份：你角色持有的手機主人\n風格關鍵字：Y2K、甜酷、閃亮、收藏貼紙\n這裡可以改成你角色的基本資料、性格、背景設定。',
-        tags: ['OWNER', 'PROFILE', 'Y2K']
-      },
-      'STAR': {
-        label: 'MEMO',
-        title: '私人備忘錄',
-        emoji: '★',
-        body: '今天也把手機裝飾得亮晶晶。\n\n這裡可以放角色日記、世界觀筆記、關係圖摘要，或任何你想藏在手機裡的內容。',
-        tags: ['DIARY', 'NOTE', 'PRIVATE']
-      }
-    };
+function makeSearchIconNode(){
+ const img=el('img','search-icon-media');
+ img.src=SEARCH_ICON_FILE;
+ img.alt='';
+ img.onerror=()=>{img.style.display='none'};
+ return img;
+}
+function openGuide(){
+ state.app='guide';
+ const p=panel('使用說明','memo');
+ addCard(p,'HOW TO USE','1. 點外螢幕，翻開手機。\n2. 輸入密碼，按中間圓形鍵解鎖。\n3. 按上下左右鍵移動選取框，中央圓鍵確認。\n4. 搜尋欄第一次點擊用手機按鍵，第二次點擊使用真實鍵盤。\n5. 輸入 STAR、さくら 或 777 可開啟隱藏頁面。\n6. 相簿可先選分類、再點相片查看完整圖片與說明。\n7. 每張照片下方都有「設為桌布」按鈕。');
+ const list=el('ul','guide-list');
+ for(const item of ['搜尋欄左側圖片只有網站主人能從 GitHub 修改，訪客不能更換。','メニュー 可以隨時開啟使用說明。','在內容頁可用方向鍵選按鈕，也能滑動螢幕捲動。','按實體「クリア」返回上一層。'])list.append(el('li','',item));
+ p.append(list);
+ const actions=el('div','guide-tool');
+ addAction(actions,'前往相簿',openPhotos);
+ addAction(actions,'返回主畫面',renderHome,true);
+ p.append(actions);
+ selectNav(p.querySelector('.panel-back'));
+}
+// ===== 搜尋欄點一下：手機按鍵；第二下：打開真實鍵盤 =====
+function showSearchStatus(message){const t=$('searchStatus');if(t)t.textContent=message}
+function activateSearchInput(){if(state.app!=='home')return;const input=$('searchInput');if(!input)return;if(state.searchMode==='idle'){state.searchMode='physical';input.readOnly=true;input.placeholder='用手機按鍵輸入';showSearchStatus('手機按鍵模式 · 下方按鍵可輸入');selectNav(input);return}if(state.searchMode==='physical'){state.searchMode='keyboard';input.readOnly=false;input.placeholder='可用真實鍵盤輸入';showSearchStatus('真實鍵盤模式 · 按 Enter 或中央圓鍵確認');selectNav(input);input.focus();return}selectNav(input);input.focus()}
+function resetSearchTap(){state.searchLastKey='';state.searchLastAt=0;state.searchLetterIndex=0}
+function syncSearchInput(){const input=$('searchInput');if(input)input.value=state.searchQuery}
+function searchKeyPress(key){if(state.app!=='home'||state.searchMode==='idle'||state.searchQuery.length>=36)return;if(key==='#'&&state.mode!==0){resetSearchTap();showSearchStatus('已確認目前文字');return}if(key==='*'&&(state.mode===2||state.mode===3)){const variants={'か':'が','さ':'ざ','た':'だ','は':'ば','ば':'ぱ','つ':'っ','や':'ゃ','ゆ':'ゅ','よ':'ょ'};const end=state.searchQuery.slice(-1);if(variants[end])state.searchQuery=state.searchQuery.slice(0,-1)+variants[end];resetSearchTap();syncSearchInput();return}const group=state.mode===1?latin[key]:(state.mode===2||state.mode===3)?kana[key]:null;if(group){const now=Date.now();if(state.searchLastKey===key&&now-state.searchLastAt<1150&&state.searchQuery.length){state.searchLetterIndex=(state.searchLetterIndex+1)%group.length;const ch=group[state.searchLetterIndex];state.searchQuery=state.searchQuery.slice(0,-1)+(state.mode===3?toKatakana(ch):ch)}else{state.searchLetterIndex=0;state.searchQuery+=(state.mode===3?toKatakana(group[0]):group[0])}state.searchLastKey=key;state.searchLastAt=now}else{state.searchQuery+=key==='0'&&state.mode===1?' ':key;resetSearchTap()}syncSearchInput();showSearchStatus('按中央圓形鍵確認暗號')}
+function submitSearch(){if(!state.open||!state.unlocked||state.app!=='home')return;const input=$('searchInput');const query=((input?input.value:state.searchQuery)||'').trim();state.searchQuery=query;resetSearchTap();if(!query){showSearchStatus('請先輸入暗號');return}const entry=HIDDEN_PAGES[query.toUpperCase()]||HIDDEN_PAGES[query];if(!entry){showSearchStatus('找不到這組暗號，請重新輸入');return}state.app='secret';const p=panel(entry.title,'memo');addCard(p,'HIDDEN FILE · '+query,entry.body);addCard(p,'MESSAGE','這是手機內的隱藏頁面，按返回即可回到桌面。');note('隱藏內容已開啟');selectNav(p.querySelector('.panel-back'))}
+// ===== 真正的螢幕方向導覽 =====
+function navItems(){return [...screen.querySelectorAll('button,input[type="text"]')].filter(n=>{const r=n.getBoundingClientRect();const st=getComputedStyle(n);return r.width>0&&r.height>0&&st.visibility!=='hidden'&&st.display!=='none'&&!n.disabled})}
+function selectNav(node){if(state.navElement)state.navElement.classList.remove('nav-chosen');state.navElement=node||null;if(!node)return;node.classList.add('nav-chosen');if(node.tagName==='BUTTON'){node.focus({preventScroll:true})}else if(node.id==='searchInput'&&state.searchMode==='keyboard'){node.focus({preventScroll:true})}const root=content;if(root.contains(node)){const area=root.getBoundingClientRect();const rect=node.getBoundingClientRect();if(rect.top<area.top+6)root.scrollBy({top:rect.top-area.top-12,behavior:'smooth'});else if(rect.bottom>area.bottom-6)root.scrollBy({top:rect.bottom-area.bottom+12,behavior:'smooth'})}}
+function activateSelection(){if(state.app==='lock'){unlock();return}if(!state.unlocked)return;if(state.app==='home'&&state.searchMode!=='idle'&&state.searchQuery.trim()&&(!state.navElement||state.navElement.id==='searchInput'||state.navElement.classList.contains('search-accept'))){submitSearch();return}const selected=state.navElement;if(selected&&navItems().includes(selected)){if(selected.id==='searchInput')activateSearchInput();else selected.click()}else if(state.app==='home'){const first=$('screenDock').querySelector('button');if(first)first.click()}}
+function navigateScreen(direction){if(!state.open)return;if(!state.unlocked){const input=$('passwordInput');if(input)selectNav(input);return}const items=navItems();if(!items.length)return;let current=state.navElement;if(!items.includes(current)){const next=state.app==='home'?$('screenDock').querySelector('button'):content.querySelector('button');selectNav(next||items[0]);return}const origin=current.getBoundingClientRect();const ox=origin.left+origin.width/2,oy=origin.top+origin.height/2;const candidates=[];for(const node of items){if(node===current)continue;const r=node.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;const dx=x-ox,dy=y-oy;const ahead=direction==='left'?-dx:direction==='right'?dx:direction==='up'?-dy:dy;if(ahead<=3)continue;const side=(direction==='left'||direction==='right')?Math.abs(dy):Math.abs(dx);const score=ahead+side*1.6+(side>32?20:0);candidates.push({node,score})}candidates.sort((a,b)=>a.score-b.score);if(candidates.length){selectNav(candidates[0].node);return}if(direction==='up'||direction==='down'){content.scrollBy({top:direction==='down'?115:-115,behavior:'smooth'});return}if(state.app==='home'&&(direction==='left'||direction==='right')){const dock=[...$('screenDock').querySelectorAll('button')];const ix=dock.indexOf(current);if(ix>=0){selectNav(dock[(ix+(direction==='right'?1:dock.length-1))%dock.length]);return}}}
 
-    // =========================
-    // 以下不用改
-    // =========================
-    const display = document.getElementById('display');
-    const hint = document.getElementById('hint');
-    const modeLabel = document.getElementById('modeLabel');
-    const clockSmall = document.getElementById('clockSmall');
-    const clockLarge = document.getElementById('clockLarge');
-    const dateLine = document.getElementById('dateLine');
-    const screenView = document.getElementById('screenView');
-    const screenBack = document.getElementById('screenBack');
-    const screenHome = document.getElementById('screenHome');
-    const ownerLine = document.getElementById('ownerLine');
-    const siteTitle = document.getElementById('siteTitle');
-    const siteSubtitle = document.getElementById('siteSubtitle');
-    const phoneBrand = document.getElementById('phoneBrand');
+// 照片由網站主人提供；訪客只可選擇圖片作桌布，不可上傳。
+function allPhotos(){return ALBUMS.flatMap(album=>album.photos)}
+function applyWallpaper(file){
+ const available=allPhotos().map(photo=>photo.file);
+ const safeFile=available.includes(file)?file:available[0];
+ state.wallpaperFile=safeFile;
+ $('screenWallpaper').style.backgroundImage='url("'+encodeURI(safeFile).replace(/"/g,'%22')+'")';
+ screen.classList.add('has-wallpaper');
+ try{localStorage.setItem(STORE_KEY,safeFile)}catch(e){}
+}
+function makePhotoImage(file,alt,classname){
+ const img=el('img',classname||'');img.src=file;img.alt=alt;img.loading='lazy';
+ img.onerror=()=>{img.style.opacity='.35';img.alt='圖片尚未上傳：'+alt};
+ return img;
+}
+function findAlbum(id){return ALBUMS.find(a=>a.id===id)}
+function openPhotos(){
+ state.app='photos';state.activeAlbum=null;state.activePhoto=null;
+ const p=panel('相簿','photos');
+ const intro=el('div','album-intro','PHOTO ALBUMS · 先選擇想看的相簿');p.append(intro);
+ const list=el('div','album-category-list');
+ for(const album of ALBUMS){
+  const btn=el('button','album-category');btn.type='button';
+  btn.setAttribute('aria-label','開啟'+album.title+'，共'+album.photos.length+'張照片');
+  btn.append(makePhotoImage(album.photos[0].file,album.title,'album-cover'));
+  const detail=el('span','album-category-info');
+  detail.append(el('strong','',album.title),el('small','',album.subtitle),el('em','',album.photos.length+' PHOTOS'));
+  btn.append(detail,el('span','album-chevron','›'));
+  btn.addEventListener('click',()=>openAlbum(album.id));list.append(btn);
+ }
+ p.append(list);
+ p.append(el('p','wallpaper-tip','所有圖片與說明都由手機主人設定。訪客可以自由瀏覽，也可以把喜歡的照片設為自己的桌布。'));
+ selectNav(list.querySelector('button'));
+ note('相簿：先選分類，再選照片。');
+}
+function openAlbum(albumId){
+ const album=findAlbum(albumId);if(!album){openPhotos();return}
+ state.app='album';state.activeAlbum=albumId;state.activePhoto=null;
+ const p=panel(album.title,'photos',openPhotos);
+ p.append(el('p','album-subtitle',album.subtitle+' · '+album.photos.length+' PHOTOS'));
+ const gallery=el('div','album-photo-grid');
+ album.photos.forEach((photo,i)=>{
+  const btn=el('button','album-photo-tile');btn.type='button';
+  btn.setAttribute('aria-label','查看照片：'+photo.title);
+  btn.append(makePhotoImage(photo.file,photo.title,'album-thumb'));
+  btn.append(el('span','album-photo-name',photo.title));
+  btn.addEventListener('click',()=>openPhoto(albumId,i));gallery.append(btn);
+ });
+ p.append(gallery);content.scrollTop=0;selectNav(gallery.querySelector('button'));
+ note('已開啟相簿：'+album.title);
+}
+function openPhoto(albumId,index){
+ const album=findAlbum(albumId);if(!album){openPhotos();return}
+ const photo=album.photos[index];if(!photo){openAlbum(albumId);return}
+ state.app='photo-detail';state.activeAlbum=albumId;state.activePhoto=index;
+ const p=panel('照片','photos',()=>openAlbum(albumId));
+ p.append(el('div','photo-breadcrumb',album.title+'  /  '+String(index+1).padStart(2,'0')+' / '+String(album.photos.length).padStart(2,'0')));
+ const photoStage=el('div','photo-large-stage');
+ photoStage.append(makePhotoImage(photo.file,photo.title,'photo-large'));
+ p.append(photoStage);
+ p.append(el('div','photo-detail-title',photo.title));
+ if(photo.date)p.append(el('div','photo-date',photo.date));
+ p.append(el('div','photo-description',photo.description||''));
+ const actionArea=el('div','photo-actions');
+ const apply=el('button','photo-wallpaper-btn',state.wallpaperFile===photo.file?'✓ 目前使用這張桌布':'♡ 設為桌布');
+ apply.type='button';apply.setAttribute('aria-label','將'+photo.title+'設為桌布');
+ apply.addEventListener('click',()=>{
+  applyWallpaper(photo.file);
+  apply.textContent='✓ 已設為桌布';
+  note('已把「'+photo.title+'」設為桌布！');
+ });
+ actionArea.append(apply);p.append(actionArea);
+ content.scrollTop=0;selectNav(p.querySelector('.panel-back'));
+ note('點擊底部「設為桌布」，只會變更你自己的手機畫面。');
+}
+function openCalendar(){const p=panel('日曆','calendar');const head=el('div','calendar-head');const prev=el('button','','‹');prev.type='button';prev.setAttribute('aria-label','上一個月');const monthTitle=el('span','','');const next=el('button','','›');next.type='button';next.setAttribute('aria-label','下一個月');head.append(prev,monthTitle,next);p.append(head);const grid=el('div','calendar-grid');p.append(grid);const info=el('div','calendar-note');p.append(info);function draw(){grid.replaceChildren();monthTitle.textContent=state.year+'年 '+String(state.month+1).padStart(2,'0')+'月';for(const d of ['日','一','二','三','四','五','六'])grid.append(el('span','weekday',d));const offset=new Date(state.year,state.month,1).getDay();for(let j=0;j<offset;j++)grid.append(el('span','blank'));const max=new Date(state.year,state.month+1,0).getDate();const today=new Date();for(let day=1;day<=max;day++){const isToday=today.getFullYear()===state.year&&today.getMonth()===state.month&&today.getDate()===day;const b=el('button',(isToday?'today ':'')+(day===state.pickedDay?'picked':''),String(day));b.type='button';b.addEventListener('click',()=>{state.pickedDay=day;draw()});grid.append(b)}info.textContent='已選擇：'+state.year+' / '+String(state.month+1).padStart(2,'0')+' / '+String(state.pickedDay).padStart(2,'0')}prev.onclick=()=>{const d=new Date(state.year,state.month-1,1);state.year=d.getFullYear();state.month=d.getMonth();state.pickedDay=1;draw()};next.onclick=()=>{const d=new Date(state.year,state.month+1,1);state.year=d.getFullYear();state.month=d.getMonth();state.pickedDay=1;draw()};draw()}
+function openApp(id){if(!state.open||!state.unlocked)return;state.app=id;let p;if(id==='contacts'){p=panel('通訊錄','contacts');addCard(p,'CONTACTS',CONTACTS_TEXT)}else if(id==='memo'){p=panel('備忘錄','memo');addCard(p,'MEMO',MEMO_TEXT)}else if(id==='messages'){p=panel('訊息','messages');addCard(p,'INBOX',MESSAGE_TEXT)}else if(id==='photos'){openPhotos()}else if(id==='calendar'){openCalendar()}else renderHome();content.scrollTop=0;if(id!=='photos'){note('方向鍵移動選取框、中央圓鍵確認；上下鍵也可捲動。');selectNav(content.querySelector('button'))}}
+function resetTap(){state.lastKey='';state.lastAt=0;state.letterIndex=0}
+function lockPhone(){state.unlocked=false;state.code='';state.mode=0;resetTap();renderLock()}
+function openPhone(){if(state.open)return;state.open=true;scene.classList.add('is-open');$('cover').setAttribute('aria-hidden','true');$('base').inert=false;$('lid').inert=false;renderLock()}
+function closePhone(){if(!state.open)return;lockPhone();state.open=false;scene.classList.remove('is-open');$('cover').removeAttribute('aria-hidden');
+$('base').inert=true;$('lid').inert=true;note('點擊合蓋手機的外螢幕，翻開這支手機 ✧')}
+function unlock(){if(!state.open)return;if(state.unlocked){activateSelection();return}const v=(($('passwordInput')||{}).value||state.code).trim();state.code=v;if(!v){syncCode('請先輸入密碼');return}if(v!==PASSWORD){syncCode('密碼不正確，請再試一次');return}state.unlocked=true;state.selected=0;renderHome()}
+function back(){if(!state.open)return;if(state.unlocked){if(state.app==='photo-detail'){openAlbum(state.activeAlbum);return}if(state.app==='album'){openPhotos();return}if(state.app!=='home'){renderHome();return}if(state.searchMode!=='idle'){state.searchQuery=state.searchQuery.slice(0,-1);resetSearchTap();syncSearchInput();showSearchStatus('已刪除最後一個字');return}lockPhone()}else{state.code=state.code.slice(0,-1);resetTap();syncCode()}}
+function toKatakana(t){return t.replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+96))}
+function keyPress(key){if(!state.open)return;if(state.unlocked){if(state.app==='home'&&state.searchMode!=='idle'){searchKeyPress(key);return}if('12345'.includes(key)){const a=APP_LIST[Number(key)-1];if(a)openApp(a.id)}else if(key==='0')renderHome();return}if(key==='#'&&state.mode!==0){resetTap();syncCode('已確定目前文字');return}if(key==='*'&&(state.mode===2||state.mode===3)){const alternates={'か':'が','さ':'ざ','た':'だ','は':'ば','ば':'ぱ','つ':'っ','や':'ゃ','ゆ':'ゅ','よ':'ょ'};const ch=state.code.slice(-1);if(ch&&alternates[ch])state.code=state.code.slice(0,-1)+alternates[ch];resetTap();syncCode();return}const group=state.mode===1?latin[key]:state.mode>1?kana[key]:null;if(group){const now=Date.now();if(state.lastKey===key&&now-state.lastAt<1300&&state.code.length){state.letterIndex=(state.letterIndex+1)%group.length;state.code=state.code.slice(0,-1)+(state.mode===3?toKatakana(group[state.letterIndex]):group[state.letterIndex])}else{state.letterIndex=0;state.code+=(state.mode===3?toKatakana(group[0]):group[0])}state.lastKey=key;state.lastAt=now}else if(state.code.length<28){state.code+=(state.mode===1&&key==='0'?' ':key);resetTap()}syncCode()}
+function cycleMode(){if(!state.open)return;if(state.unlocked&&!(state.app==='home'&&state.searchMode!=='idle'))return;state.mode=(state.mode+1)%modes.length;resetTap();resetSearchTap();if(state.unlocked){showSearchStatus('輸入模式：'+modes[state.mode]);return}syncCode('輸入模式已切換：'+modes[state.mode]);footer('清除',modes[state.mode],'關蓋')}
+function moveSelection(delta){navigateScreen(delta<0?'up':'down')}
+$('cover').addEventListener('click',openPhone);$('okBtn').addEventListener('click',unlock);$('softLeft').addEventListener('click',back);$('softRight').addEventListener('click',closePhone);
+$('menuBtn').addEventListener('click',()=>{if(state.unlocked)openGuide()});$('messageBtn').addEventListener('click',()=>{if(state.unlocked)openApp('memo')});$('photoBtn').addEventListener('click',()=>{if(state.unlocked)openApp('photos')});$('modeBtn').addEventListener('click',cycleMode);$('clearBtn').addEventListener('click',back);
+$('powerBtn').addEventListener('click',()=>{if(state.unlocked)lockPhone();else closePhone()});$('callBtn').addEventListener('click',()=>{if(state.unlocked)renderHome();else syncCode('請按中央圓形鍵解鎖')});
+$('upBtn').addEventListener('click',()=>navigateScreen('up'));$('downBtn').addEventListener('click',()=>navigateScreen('down'));$('leftBtn').addEventListener('click',()=>navigateScreen('left'));$('rightBtn').addEventListener('click',()=>navigateScreen('right'));
+document.querySelectorAll('[data-key]').forEach(b=>b.addEventListener('click',()=>keyPress(b.dataset.key)));
+document.querySelectorAll('[data-speed]').forEach(b=>b.addEventListener('click',()=>{if(state.unlocked)openApp(b.dataset.speed)}));
+screen.addEventListener('pointerdown',e=>{const btn=e.target.closest('button');if(btn&&screen.contains(btn))selectNav(btn)});
+// V18: touch-scroll for app/photo pages inside the 3D flip transform.
+// Tap stays a tap. A vertical drag manually scrolls the display and allows
+// reaching the description and "設為桌布" button on actual phones.
+let touchScrollLastY=null;
+let touchScrollStartY=null;
+let touchScrollStartX=null;
+let touchScrollDragging=false;
+content.addEventListener('touchstart',(event)=>{
+ if(!state.open||!state.unlocked||state.app==='home'||event.touches.length!==1){
+  touchScrollLastY=null;return;
+ }
+ const touch=event.touches[0];
+ touchScrollLastY=touch.clientY;
+ touchScrollStartY=touch.clientY;
+ touchScrollStartX=touch.clientX;
+ touchScrollDragging=false;
+},{passive:true});
+content.addEventListener('touchmove',(event)=>{
+ if(touchScrollLastY===null||event.touches.length!==1)return;
+ const touch=event.touches[0];
+ const totalY=touch.clientY-touchScrollStartY;
+ const totalX=touch.clientX-touchScrollStartX;
+ if(!touchScrollDragging){
+  if(Math.abs(totalY)<6||Math.abs(totalY)<Math.abs(totalX))return;
+  touchScrollDragging=true;
+ }
+ if(event.cancelable)event.preventDefault();
+ const dy=touch.clientY-touchScrollLastY;
+ content.scrollTop-=dy;
+ touchScrollLastY=touch.clientY;
+},{passive:false});
+function stopTouchScroll(){touchScrollLastY=null;touchScrollStartY=null;touchScrollStartX=null;touchScrollDragging=false}
+content.addEventListener('touchend',stopTouchScroll,{passive:true});
+content.addEventListener('touchcancel',stopTouchScroll,{passive:true});
 
-    const letters = { 2: 'ABC', 3: 'DEF', 4: 'GHI', 5: 'JKL', 6: 'MNO', 7: 'PQRS', 8: 'TUV', 9: 'WXYZ' };
-    let value = '';
-    let alphaMode = false;
-    let lastKey = '';
-    let lastAt = 0;
-    let letterIndex = 0;
-    let currentView = 'lock';
 
-    siteTitle.textContent = SITE_TITLE;
-    siteSubtitle.textContent = SITE_SUBTITLE;
-    phoneBrand.textContent = PHONE_OWNER;
-    ownerLine.textContent = `OWNER : ${PHONE_OWNER}`;
-
-    function resetMultiTap() { lastKey = ''; lastAt = 0; letterIndex = 0; }
-
-    function renderLock(customHint) {
-      currentView = 'lock';
-      screenView.innerHTML = `
-        <div id="lockView">
-          <div class="clock-large" id="clockLargeInner">${clockSmall.textContent}</div>
-          <div class="date-line" id="dateLineInner">${dateLine.textContent}</div>
-          <div class="tiny-heart" aria-hidden="true">♥</div>
-          <div class="owner-line">OWNER : ${PHONE_OWNER}</div>
-          <div class="unlock-label">ENTER CODE</div>
-          <div class="display ${value ? '' : 'empty'}" id="displayInner">${value || '_ _ _ _'}</div>
-          <div class="small-note" id="hintInner">${customHint || (alphaMode ? 'ABC 模式：同一數字連按可切換英文字母' : '按下方手機鍵盤輸入暗號，再按 OK 解鎖')}</div>
-        </div>
-      `;
-    }
-
-    function renderContent(entry, code) {
-      currentView = 'content';
-      screenView.innerHTML = `
-        <div>
-          <div class="unlock-ok">UNLOCKED : ${code}</div>
-          <div class="content-card">
-            <div class="content-head">
-              <div>
-                <span>${entry.label}</span>
-                <strong>${entry.title}</strong>
-              </div>
-              <div class="content-emoji" aria-hidden="true">${entry.emoji || '✦'}</div>
-            </div>
-            <div class="content-body">${entry.body}</div>
-            <div class="content-tags">${(entry.tags || []).map(tag => `<b>${tag}</b>`).join('')}</div>
-          </div>
-          <div class="small-note" style="margin-top:10px;">按 BACK 可返回鎖定畫面，按 HOME 可清空並回主畫面。</div>
-        </div>
-      `;
-    }
-
-    function updateDisplay(customHint) {
-      if (currentView === 'lock') renderLock(customHint);
-    }
-
-    function appendChar(char) {
-      if (currentView !== 'lock' || value.length >= 24) return;
-      value += char;
-      resetMultiTap();
-      updateDisplay();
-    }
-
-    function pressKey(key) {
-      if (currentView !== 'lock' || value.length >= 24) return;
-      if (alphaMode && letters[key]) {
-        const now = Date.now();
-        const group = letters[key];
-        if (lastKey === key && now - lastAt < 950 && value.length > 0) {
-          letterIndex = (letterIndex + 1) % group.length;
-          value = value.slice(0, -1) + group[letterIndex];
-        } else {
-          letterIndex = 0;
-          value += group[letterIndex];
-        }
-        lastKey = key;
-        lastAt = now;
-        updateDisplay();
-      } else if (alphaMode && key === '0') {
-        appendChar(' ');
-      } else {
-        appendChar(key);
-      }
-    }
-
-    function erase() {
-      if (currentView !== 'lock') return;
-      value = value.slice(0, -1);
-      resetMultiTap();
-      updateDisplay();
-    }
-
-    function toggleMode() {
-      alphaMode = !alphaMode;
-      resetMultiTap();
-      modeLabel.textContent = alphaMode ? 'MODE : ABC' : 'MODE : 123';
-      updateDisplay();
-    }
-
-    function clearToHome(message) {
-      value = '';
-      resetMultiTap();
-      renderLock(message);
-    }
-
-    function unlock() {
-      if (currentView !== 'lock') return;
-      resetMultiTap();
-      const code = value.trim().toUpperCase();
-      if (!code) {
-        updateDisplay('請先輸入暗號');
-        return;
-      }
-      const entry = phoneContents[code];
-      if (!entry) {
-        updateDisplay('暗號錯誤，請再試一次');
-        return;
-      }
-      renderContent(entry, code);
-    }
-
-    function updateClock() {
-      const now = new Date();
-      const timeText = now.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false });
-      const dateText = now.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, ' / ');
-      clockSmall.textContent = timeText;
-      dateLine.textContent = dateText;
-      if (currentView === 'lock') renderLock();
-    }
-
-    document.querySelectorAll('[data-key]').forEach((button) => {
-      button.addEventListener('click', () => pressKey(button.dataset.key));
-    });
-    document.getElementById('toggle').addEventListener('click', toggleMode);
-    document.getElementById('delete').addEventListener('click', erase);
-    document.getElementById('unlock').addEventListener('click', unlock);
-    document.getElementById('okCenter').addEventListener('click', unlock);
-
-    screenBack.addEventListener('click', () => {
-      if (currentView === 'content') renderLock('已返回鎖定畫面');
-      else erase();
-    });
-    screenHome.addEventListener('click', () => clearToHome('已回到主畫面'));
-
-    document.addEventListener('keydown', (event) => {
-      if (event.altKey || event.ctrlKey || event.metaKey) return;
-      if (event.key === 'Enter') { event.preventDefault(); unlock(); return; }
-      if (event.key === 'Backspace') { event.preventDefault(); currentView === 'content' ? renderLock('已返回鎖定畫面') : erase(); return; }
-      if (event.key === 'Escape') { event.preventDefault(); clearToHome('已回到主畫面'); return; }
-
-      if (currentView !== 'lock') return;
-
-      if (/^[a-zA-Z]$/.test(event.key)) {
-        value += event.key.toUpperCase();
-        resetMultiTap();
-        updateDisplay();
-      } else if (/^[0-9*#]$/.test(event.key)) {
-        appendChar(event.key);
-      } else if (event.key === ' ') {
-        appendChar(' ');
-      }
-    });
-
-    updateClock();
-    window.setInterval(updateClock, 30000);
-    renderLock();
-  </script>
+document.addEventListener('keydown',e=>{if(!state.open||e.ctrlKey||e.metaKey||e.altKey)return;const isTyping=e.target instanceof HTMLInputElement&&(e.target.id==='passwordInput'||e.target.id==='searchInput');if(e.key.startsWith('Arrow')){if(isTyping&&e.target.id==='searchInput'&&state.searchMode==='keyboard'&&(e.key==='ArrowLeft'||e.key==='ArrowRight'))return;e.preventDefault();navigateScreen(e.key.slice(5).toLowerCase());return}if(e.key==='Enter'){if(!e.isComposing){e.preventDefault();if(state.unlocked&&state.app==='home'&&state.searchQuery.trim())submitSearch();else unlock()}return}if(e.key==='Escape'){e.preventDefault();if(state.unlocked)back();else closePhone();return}if(e.key==='Backspace'){if(!isTyping){e.preventDefault();back()}return}if(isTyping)return;if(!state.unlocked&&/^[\p{L}\p{N}*#]$/u.test(e.key))keyPress(e.key)});
+$('base').inert=true;$('lid').inert=true;
+try{const storedWallpaper=localStorage.getItem(STORE_KEY);if(storedWallpaper)state.wallpaperFile=storedWallpaper}catch(e){}
+applyWallpaper(state.wallpaperFile);renderDock();updateClocks();setInterval(updateClocks,30000);
+</script>
 </body>
 </html>
